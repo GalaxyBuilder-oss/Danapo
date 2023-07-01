@@ -1,4 +1,7 @@
-<marquee>GalaxyBuilder</marquee>
+Just want to save and let me know when you try it, any issues? feel free to tell, Thank You..
+
+
+<h1>GalaxyBuilder</h1>
 - Hi, I’m GalaxyBuilder! Nice To Meet You👋
 - 👀 I’m interested in Coding And Designing
 - 🌱 I’m currently learning A C Language
