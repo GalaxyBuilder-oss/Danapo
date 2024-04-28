@@ -1,9 +1,13 @@
-<h1>Danapo - A Loan Project(not to plan anyway)</h1><br>
+# Danapo - A Loan Project
 Just want to save and let me know when you try it, any issues? feel free to tell, Thank You..
-<h4>What Future Of This Project?</h4>
+
+# What Future Of This Project?
 For Now, nothing can i do, idk
 
-<h1>GalaxyBuilder</h1>
+# Components
+- C
+
+# About Me
 - Hi, I’m GalaxyBuilder! Nice To Meet You👋<br>
 - 👀 I’m interested in Coding And Designing<br>
 - 🌱 I’m currently learning A C Language<br>
