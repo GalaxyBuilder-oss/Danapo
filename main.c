@@ -5,7 +5,8 @@
 
 #define MAX_ARRAY 100
 
-typedef struct {
+typedef struct
+{
     char nik[17];
     char name[50];
     char dateofbirth[50];
@@ -13,10 +14,11 @@ typedef struct {
     char phonenum[15];
     char email[35];
     char username[10];
-    char password[7];612811
+    char password[7]; // 612811
     int serialnum;
 } Data;
-typedef struct {
+typedef struct
+{
     char nik[17];
     char balance_loan[50];
     char long_loan[50];
@@ -26,18 +28,18 @@ typedef struct {
 } Debitur;
 
 char pilih;
-int menupilih;
-int no;
+int menupilih = 0;
+int no = 0;
 int salah = 0;
-int yyyy;
+int yyyy = 0;
 static char username[10] = {}, password[10] = {};
 char admin_us[] = "admin123";
 char admin_pw[] = "123456";
 
-const char* USER_DATA_IN = "%s;%s;%s;%s;%s;%s;%s;%s\n";
-const char* USER_DATA_OUT = "%[^;];%[^;];%[^;];%[^;];%[^;];%[^;];%[^;];%[^\n]\n";
-const char* USER_DEBITUR_IN = "%s;%s;%s;%s;%s;%s\n";
-const char* USER_DEBITUR_OUT = "%[^;];%[^;];%[^;];%[^;];%[^;];%[^\n]\n";
+const char *USER_DATA_IN = "%s;%s;%s;%s;%s;%s;%s;%s\n";
+const char *USER_DATA_OUT = "%[^;];%[^;];%[^;];%[^;];%[^;];%[^;];%[^;];%[^\n]\n";
+const char *USER_DEBITUR_IN = "%s;%s;%s;%s;%s;%s\n";
+const char *USER_DEBITUR_OUT = "%[^;];%[^;];%[^;];%[^;];%[^;];%[^\n]\n";
 
 FILE *fw, *fw1, *fo, *fo1, *fa, *fa1, *fr, *fr1;
 
@@ -61,27 +63,31 @@ void Disclaimer();
 void TermOfService();
 void Contacts();
 void transfer(char username_field[]);
-void transHist(char username_fields[]);
+void transactionHistory(char username_fields[]);
 
-void file_check() {
+void file_check()
+{
     background_color(BLACK);
     cursor(false);
     bool check_file = true;
     fr = fopen("./data.txt", "r");
     fr1 = fopen("./list_debitur.txt", "r");
-    do {
+    do
+    {
         fclose(fr);
         fclose(fr1);
         outerFrame(37, 131);
         bg_content(36, 128);
         position(52, 20);
         printf("Checking file");
-        for(int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++)
+        {
             Sleep(250);
             position(65 + i, 20);
             printf(".");
         }
-        if(fr == NULL && fr1 == NULL) {
+        if (fr == NULL && fr1 == NULL)
+        {
             fw = fopen("./data.txt", "w");
             fw1 = fopen("./list_debitur.txt", "w");
             // Langsung Diisi Pengguna Pertama Sebagai Contoh
@@ -94,24 +100,29 @@ void file_check() {
             fclose(fw1);
             fclose(fw);
         }
-        else {
-            check_file = false;
+        else
+        {
+            check_file = true;
         }
     } while (check_file);
     disp_main();
 }
-void Login_Val(char username_field[], char password_field[]) {
+void Login_Val(char username_field[], char password_field[])
+{
     int read = 0;
     int current_line = 0;
     fr = fopen("./data.txt", "r");
     int a = 0;
-    while(!feof(fr)) {
-        if (strcmp(username_field, admin_us) == 0 && strcmp(password_field, admin_pw) == 0) {
+    while (!feof(fr))
+    {
+        if (strcmp(username_field, admin_us) == 0 && strcmp(password_field, admin_pw) == 0)
+        {
             read = 1;
             break;
         }
         fscanf(fr, USER_DATA_OUT, &user_login.nik, &user_login.name, &user_login.dateofbirth, &user_login.address, &user_login.phonenum, &user_login.email, &user_login.username, &user_login.password);
-        if (strcmp(username_field, user_login.username) == 0 && strcmp(password_field, user_login.password) == 0) {
+        if (strcmp(username_field, user_login.username) == 0 && strcmp(password_field, user_login.password) == 0)
+        {
             read = 2;
             strcpy(user1.nik, user_login.nik);
             strcpy(user1.name, user_login.name);
@@ -127,101 +138,113 @@ void Login_Val(char username_field[], char password_field[]) {
             fclose(fr);
             break;
         }
-        else if (strcmp(username_field, user_login.username) == 0 && strcmp(password_field, user_login.password) == 1) {
+        else if (strcmp(username_field, user_login.username) == 1 || strcmp(password_field, user_login.password) == 1)
+        {
             read = 3;
-            break;
         }
-        else read = 0;
+        else
+            read = 0;
     }
-    if (read == 1) {
+    if (read == 1)
+    {
         fclose(fr);
         position(61, 22);
         printf("Login Sebagai Admin Sukses");
         Sleep(250);
-        salah=0;
+        salah = 0;
         AdminMenu();
     }
-    else if (read == 2) {
+    else if (read == 2)
+    {
         UserMenu(user_login.username);
     }
-    else {
-        if (read == 3) {
-            position(61, 24);
-            printf("Password Salah");
-            Sleep(350);
-            Login();
-        }
-        else if (read == 0) {
-            if (salah == 2) {
-                cursor(false);
-                position(58, 24);
-                printf("Apakah Anda Ingin Mendaftar?");
-                position(82, 27);
-                text_color(DARK_YELLOW);
-                printf("YA");
-                position(61, 27);
-                text_color(YELLOW);
-                printf("TIDAK");
-                menupilih = 1;
-                while ((pilih = getch()) != 13)
+    else if (read == 3)
+    {
+        position(61, 24);
+        printf("Password Salah");
+        Sleep(350);
+        Login();
+    }
+    else if (read == 0)
+    {
+        if (salah == 2)
+        {
+            cursor(false);
+            position(58, 24);
+            printf("Apakah Anda Ingin Mendaftar?");
+            position(82, 27);
+            text_color(DARK_YELLOW);
+            printf("YA");
+            position(61, 27);
+            text_color(YELLOW);
+            printf("TIDAK");
+            menupilih = 1;
+            while ((pilih = getch()) != 13)
+            {
+                if (pilih == 77)
                 {
-                    if (pilih == 77) {
-                        if(menupilih == 1) {
-                            position(82, 27);
-                            text_color(YELLOW);
-                            printf("YA");
-                            position(61, 27);
-                            text_color(DARK_YELLOW);
-                            printf("TIDAK");
-                            menupilih = 0;
-                        }
-                        else {
-                            position(82, 27);
-                            text_color(DARK_YELLOW);
-                            printf("YA");
-                            position(61, 27);
-                            text_color(YELLOW);
-                            printf("TIDAK");
-                            menupilih = 1;
-                        }
+                    if (menupilih == 1)
+                    {
+                        position(82, 27);
+                        text_color(YELLOW);
+                        printf("YA");
+                        position(61, 27);
+                        text_color(DARK_YELLOW);
+                        printf("TIDAK");
+                        menupilih = 0;
                     }
-                    else if(pilih == 75) {
-                        if(menupilih == 0) {
-                            position(82, 27);
-                            text_color(DARK_YELLOW);
-                            printf("YA");
-                            position(61, 27);
-                            text_color(YELLOW);
-                            printf("TIDAK");
-                            menupilih = 1;
-                        }
-                        else {
-                            position(82, 27);
-                            text_color(YELLOW);
-                            printf("YA");
-                            position(61, 27);
-                            text_color(DARK_YELLOW);
-                            printf("TIDAK");
-                            menupilih = 0;
-                        }
+                    else
+                    {
+                        position(82, 27);
+                        text_color(DARK_YELLOW);
+                        printf("YA");
+                        position(61, 27);
+                        text_color(YELLOW);
+                        printf("TIDAK");
+                        menupilih = 1;
                     }
                 }
-                if (menupilih == 0) {
-                    confirm(0);
+                else if (pilih == 75)
+                {
+                    if (menupilih == 0)
+                    {
+                        position(82, 27);
+                        text_color(DARK_YELLOW);
+                        printf("YA");
+                        position(61, 27);
+                        text_color(YELLOW);
+                        printf("TIDAK");
+                        menupilih = 1;
+                    }
+                    else
+                    {
+                        position(82, 27);
+                        text_color(YELLOW);
+                        printf("YA");
+                        position(61, 27);
+                        text_color(DARK_YELLOW);
+                        printf("TIDAK");
+                        menupilih = 0;
+                    }
                 }
-                else if (menupilih == 1) {
-                    salah = 0;
-                    disp_main();
-                }
-
             }
-            else {
-                position(61, 24);
-                printf("Username Salah / Tidak Ditemukan");
-                Sleep(350);
-                salah++;
-                Login();
+            if (menupilih == 0)
+            {
+                confirm(0);
             }
+            else if (menupilih == 1)
+            {
+                salah = 0;
+                disp_main();
+            }
+        }
+        else
+        {
+            position(61, 24);
+            printf("Username Salah / Tidak Ditemukan");
+            Sleep(350);
+            salah++;
+            Login();
         }
     }
 }
@@ -257,7 +280,6 @@ void Login()
     background_color(GRAY);
     text_color(YELLOW);
     Login_Val(username, password);
-
 }
 void SignUp(int loan, int month)
 {
@@ -303,16 +325,20 @@ void userData(int loan, int month)
     printf("Masukkan PIN  : ");
     password_valid(user.password, 21, 23);
     fr = fopen("./data.txt", "r");
-    while(!feof(fr)) {
+    while (!feof(fr))
+    {
         fscanf(fr, USER_DATA_OUT, &user1.nik, &user1.name, &user1.dateofbirth, &user1.address, &user1.phonenum, &user1.email, &user1.username, &user1.password);
-        if (strcmp(user1.nik, user.nik) == 0) {
+        if (strcmp(user1.nik, user.nik) == 0)
+        {
             read = 1;
             break;
         }
-        else read = 0;
+        else
+            read = 0;
     }
     fclose(fr);
-    if(read == 0) {
+    if (read == 0)
+    {
         fa = fopen("./data.txt", "a");
         fprintf(fa, USER_DATA_IN, user.nik, user.name, user.dateofbirth, user.address, user.phonenum, user.email, user.username, user.password);
         fclose(fa);
@@ -328,7 +354,8 @@ void userData(int loan, int month)
         Sleep(550);
         Login();
     }
-    else {
+    else
+    {
         position(5, 25);
         printf("NIK Telah Terdaftar, Ulangi Pendaftaran");
         Sleep(750);
@@ -345,7 +372,8 @@ void Payment(char username_field[])
     waktu = time(NULL);
     struct tm t = *localtime(&waktu);
     fr = fopen("list_debitur.txt", "r");
-    while(!feof(fr)) {
+    while (!feof(fr))
+    {
         fscanf(fr, USER_DEBITUR_OUT, &loan_user1.nik, &loan_user1.balance_loan, &loan_user1.long_loan, &loan_user1.remaining_loan, &loan_user1.username, &loan_user1.password);
         strcpy(loan[i].nik, loan_user1.nik);
         strcpy(loan[i].balance_loan, loan_user1.balance_loan);
@@ -368,51 +396,64 @@ void Payment(char username_field[])
     printf("Masukan Jumlah Uang: ");
     scanf("%d", &uang);
     position(20, 8);
-    for (int i = 0; i < 10; i++ ) {
-        if(strcmp(username_field, loan[i].username) == 0) {
+    for (int i = 0; i < 10; i++)
+    {
+        if (strcmp(username_field, loan[i].username) == 0)
+        {
             tamp = atoi(loan[i].balance_loan);
             monthly = atoi(loan[i].remaining_loan);
             break;
         }
     }
-    if (tamp >= uang) {
+    if (tamp >= uang)
+    {
         tamp -= uang;
     }
-    else {
+    else
+    {
         Payment(username_field);
     }
-    for (int i = 0; i < 10; i++ ) {
-        if(strcmp(username_field, loan[i].username) == 0) {
+    for (int i = 0; i < 10; i++)
+    {
+        if (strcmp(username_field, loan[i].username) == 0)
+        {
             itoa(tamp, loan[i].balance_loan, 10);
             break;
         }
     }
     int read = 0;
-    for (int i = 0; i < 10; i++ ) {
-        if (strcmp(loan[i].username, username_field) == 0 && strcmp(loan[i].balance_loan, "0") == 0) {
+    for (int i = 0; i < 10; i++)
+    {
+        if (strcmp(loan[i].username, username_field) == 0 && strcmp(loan[i].balance_loan, "0") == 0)
+        {
             strcpy(loan[i].balance_loan, "\0");
             read = 1;
             break;
         }
-        else read = 0;
+        else
+            read = 0;
     }
-    if (read == 1) {
+    if (read == 1)
+    {
         position(37, 18);
         printf("Pembayaran Selesai");
         position(37, 19);
         printf("Pinjaman Lunas");
         fw = fopen("list_debitur.txt", "w");
-        for (int i = 0; i < 10; i++ ) {
-            if(strcmp(loan[i].balance_loan, "\n") == 0) {
+        for (int i = 0; i < 10; i++)
+        {
+            if (strcmp(loan[i].balance_loan, "\n") == 0)
+            {
                 // fprintf(fw, USER_DEBITUR_IN, loan[i].nik, loan[i].balance_loan, loan[i].long_loan, loan[i].remaining_loan, loan[i].username, loan[i].password);
             }
-            else {
+            else
+            {
                 fprintf(fw, USER_DEBITUR_IN, loan[i].nik, loan[i].balance_loan, loan[i].long_loan, loan[i].remaining_loan, loan[i].username, loan[i].password);
-
             }
         }
         fclose(fw);
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 10; i++)
+        {
             strcpy(loan[i].nik, "\0");
             strcpy(loan[i].balance_loan, "\0");
             strcpy(loan[i].long_loan, "\0");
@@ -433,19 +474,23 @@ void Payment(char username_field[])
             strcpy(loan_user1.password, "\0");
         }
     }
-    else {
+    else
+    {
         position(37, 18);
         printf("Pembayaran Selesai");
         fw = fopen("list_debitur.txt", "w");
-        for (int i = 0; i < 10; i++ ) {
-            if(strcmp(username_field, loan[i].username) == 0) {
+        for (int i = 0; i < 10; i++)
+        {
+            if (strcmp(username_field, loan[i].username) == 0)
+            {
                 fprintf(fw, USER_DEBITUR_IN, loan[i].nik, loan[i].balance_loan, loan[i].long_loan, loan[i].remaining_loan, loan[i].username, loan[i].password);
                 break;
             }
         }
         fclose(fw);
     }
-    while ((pilih = getch()) != 27) {
+    while ((pilih = getch()) != 27)
+    {
         menupilih = 0;
     }
     Transaction(username_field);
@@ -485,9 +530,12 @@ void About()
     menupilih = 1;
     Disclaimer();
     background_color(GRAY);
-    while ((pilih = getch()) != 13) {
-        if (pilih == 80) {
-            if (menupilih == 1) {
+    while ((pilih = getch()) != 13)
+    {
+        if (pilih == 80)
+        {
+            if (menupilih == 1)
+            {
                 background_color(DARK_YELLOW);
                 text_color(YELLOW);
                 position(99, 23);
@@ -515,7 +563,8 @@ void About()
                 TermOfService();
                 menupilih = 2;
             }
-            else if (menupilih == 2) {
+            else if (menupilih == 2)
+            {
                 background_color(DARK_YELLOW);
                 text_color(YELLOW);
                 position(99, 23);
@@ -543,7 +592,8 @@ void About()
                 Contacts();
                 menupilih = 3;
             }
-            else {
+            else
+            {
                 background_color(YELLOW);
                 text_color(DARK_YELLOW);
                 position(99, 23);
@@ -572,8 +622,10 @@ void About()
                 menupilih = 1;
             }
         }
-        else if (pilih == 72) {
-            if (menupilih == 3) {
+        else if (pilih == 72)
+        {
+            if (menupilih == 3)
+            {
                 position(99, 23);
                 background_color(DARK_YELLOW);
                 text_color(YELLOW);
@@ -601,7 +653,8 @@ void About()
                 TermOfService();
                 menupilih = 2;
             }
-            else if (menupilih == 2) {
+            else if (menupilih == 2)
+            {
                 position(99, 23);
                 background_color(YELLOW);
                 text_color(DARK_YELLOW);
@@ -629,7 +682,8 @@ void About()
                 Disclaimer();
                 menupilih = 1;
             }
-            else {
+            else
+            {
                 background_color(DARK_YELLOW);
                 text_color(YELLOW);
                 position(99, 23);
@@ -658,7 +712,8 @@ void About()
                 menupilih = 3;
             }
         }
-        else if (pilih == 27) {
+        else if (pilih == 27)
+        {
             menupilih = 0;
             break;
         }
@@ -677,7 +732,8 @@ void AccountList()
     printf("> > >  List Pengguna Yang Mendaftar ");
     fr = fopen("./data.txt", "r");
     int a = 0, b = 0, c = 0, index = 0;
-    while(!feof(fr)) {
+    while (!feof(fr))
+    {
         fscanf(fr, USER_DATA_OUT, &user.nik, &user.name, &user.dateofbirth, &user.address, &user.phonenum, &user.email, &user.username, &user.password);
         strcpy(user_list[index].nik, user.nik);
         strcpy(user_list[index].name, user.name);
@@ -688,7 +744,8 @@ void AccountList()
         strcpy(user_list[index].username, user.username);
         strcpy(user_list[index].password, user.password);
         user_list[index].serialnum = index;
-        if (index < 10) {
+        if (index < 10)
+        {
             position(44, 6 + a);
             printf("%d. %s", index + 1, user.name);
             a += 2;
@@ -702,7 +759,8 @@ void AccountList()
     b = 0;
     c = 0;
     index = 0;
-    while(!feof(fr)) {
+    while (!feof(fr))
+    {
         fscanf(fr, USER_DEBITUR_OUT, &loan_user.nik, &loan_user.balance_loan, &loan_user.long_loan, &loan_user.remaining_loan, &loan_user.username, &loan_user.password);
         strcpy(loan_list[index].nik, loan_user.nik);
         strcpy(loan_list[index].balance_loan, loan_user.balance_loan);
@@ -715,13 +773,16 @@ void AccountList()
     fclose(fr);
     VLine(19, DARK_YELLOW, 80, 5);
     text_color(YELLOW);
-    do {
+    do
+    {
         index = 0;
         position(82, 6);
         printf("Masukan Nama Pengguna: ");
         scanf("%d", &user.serialnum);
-        for (int i = 0; i < 10; i++) {
-            if (user_list[i].serialnum == user.serialnum - 1) {
+        for (int i = 0; i < 10; i++)
+        {
+            if (user_list[i].serialnum == user.serialnum - 1)
+            {
                 position(82, 8);
                 printf("%s", user_list[i].name);
                 strcpy(user1.username, user_list[i].username);
@@ -729,9 +790,11 @@ void AccountList()
                 index = 1;
                 break;
             }
-            else index = 0;
+            else
+                index = 0;
         }
-        if (index == 0) {
+        if (index == 0)
+        {
             position(82, 8);
             printf("Tidak Ada User");
             Sleep(350);
@@ -740,7 +803,7 @@ void AccountList()
             position(82, 6);
             printf("                        ");
         }
-    } while(menu);
+    } while (menu);
     cursor(false);
     position(84, 16);
     text_color(DARK_YELLOW);
@@ -752,9 +815,12 @@ void AccountList()
     printf("< < Tekan Esc (Escape) Untuk Kembali");
     no = 0;
     menupilih = 2;
-    while((pilih = getch()) != 13) {
-        if (pilih == 72) {
-            if (menupilih == 2) {
+    while ((pilih = getch()) != 13)
+    {
+        if (pilih == 72)
+        {
+            if (menupilih == 2)
+            {
                 position(84, 16);
                 text_color(YELLOW);
                 printf("E D I T");
@@ -763,7 +829,8 @@ void AccountList()
                 printf("H A P U S");
                 menupilih = 3;
             }
-            else {
+            else
+            {
                 position(84, 16);
                 text_color(DARK_YELLOW);
                 printf("E D I T");
@@ -772,8 +839,11 @@ void AccountList()
                 printf("H A P U S");
                 menupilih = 2;
             }
-        } else if (pilih == 80) {
-            if (menupilih == 3) {
+        }
+        else if (pilih == 80)
+        {
+            if (menupilih == 3)
+            {
                 position(84, 16);
                 text_color(DARK_YELLOW);
                 printf("E D I T");
@@ -782,7 +852,8 @@ void AccountList()
                 printf("H A P U S");
                 menupilih = 2;
             }
-            else {
+            else
+            {
                 position(84, 16);
                 text_color(YELLOW);
                 printf("E D I T");
@@ -792,7 +863,8 @@ void AccountList()
                 menupilih = 3;
             }
         }
-        else if (pilih == 27) {
+        else if (pilih == 27)
+        {
             position(84, 16);
             text_color(YELLOW);
             printf("E D I T");
@@ -803,19 +875,26 @@ void AccountList()
             break;
         }
     }
-    if (menupilih == 1) AdminMenu(); // Ke Menu Admin
-    else if (menupilih == 2) AdminMenu();// Edit
-    else if (menupilih == 3) delete_account(user.username);// Hapus
-    else AccountList();
+    if (menupilih == 1)
+        AdminMenu(); // Ke Menu Admin
+    else if (menupilih == 2)
+        AdminMenu(); // Edit
+    else if (menupilih == 3)
+        delete_account(user.username); // Hapus
+    else
+        AccountList();
 }
-void edit_account(char username_field[]) {
+void edit_account(char username_field[])
+{
     cursor(true);
     bg_content(37, 130);
     outerFrame(37, 131);
     position(34, 26);
     printf("< < Tekan Esc (Escape) Untuk Kembali");
-    for (int i = 0; i < 10; i++) {
-        if (user_list[i].serialnum == user.serialnum - 1) {
+    for (int i = 0; i < 10; i++)
+    {
+        if (user_list[i].serialnum == user.serialnum - 1)
+        {
             position(3, 8);
             printf("%s", user_list[i].nik);
             position(3, 9);
@@ -836,35 +915,45 @@ void edit_account(char username_field[]) {
             break;
         }
     }
-    while ((pilih = getch()) != 27) {
+    while ((pilih = getch()) != 27)
+    {
         menupilih = 0;
     }
     AccountList();
 }
-void delete_account(char username_field[]) {
-    for (int i = 0; i < 10; i++) {
-        if (strcmp(username_field, user_list[i].username) == 0) {
+void delete_account(char username_field[])
+{
+    for (int i = 0; i < 10; i++)
+    {
+        if (strcmp(username_field, user_list[i].username) == 0)
+        {
             strcpy(user_list[i].username, "\0");
             strcpy(loan_list[i].username, "\0");
             break;
         }
     }
     fw = fopen("data.txt", "w");
-    for (int i = 0; i < 10; i++) {
-        if (strcmp(user_list[i].username, "\0") == 0) {
+    for (int i = 0; i < 10; i++)
+    {
+        if (strcmp(user_list[i].username, "\0") == 0)
+        {
             fputs("", fw);
         }
-        else {
+        else
+        {
             fprintf(fw, USER_DATA_IN, user_list[i].nik, user_list[i].name, user_list[i].dateofbirth, user_list[i].address, user_list[i].phonenum, user_list[i].email, user_list[i].username, user_list[i].password);
         }
     }
     fclose(fw);
     fw = fopen("tamp.txt", "w");
-    for (int i = 0; i < 10; i++) {
-        if (strcmp(loan_list[i].username, "\0") == 0) {
+    for (int i = 0; i < 10; i++)
+    {
+        if (strcmp(loan_list[i].username, "\0") == 0)
+        {
             fputs("", fw);
         }
-        else {
+        else
+        {
             fprintf(fa, USER_DEBITUR_IN, loan_user.nik, loan_user.balance_loan, loan_user.long_loan, loan_user.remaining_loan, user1.username, user1.password);
         }
     }
@@ -882,9 +971,11 @@ void Profile(char username_field[])
     position(34, 26);
     printf("< < Tekan Esc (Escape) Untuk Kembali");
     fr = fopen("./data.txt", "r");
-    while(!feof(fr)) {
+    while (!feof(fr))
+    {
         fscanf(fr, USER_DATA_OUT, &user.nik, &user.name, &user.dateofbirth, &user.address, &user.phonenum, &user.email, &user.username, &user.password);
-        if (strcmp(username_field, user.username) == 0) {
+        if (strcmp(username_field, user.username) == 0)
+        {
             position(44, 6);
             printf(" NIK           : %s", user.nik);
             position(44, 8);
@@ -901,14 +992,16 @@ void Profile(char username_field[])
         }
     }
     fclose(fr);
-    while ((pilih = getch()) != 27) {
+    while ((pilih = getch()) != 27)
+    {
         menupilih = 0;
     }
     UserMenu(user1.username);
 }
 void Transaction(char username_field[])
 {
-    if (strcmp(username_field, admin_us) == 0) {
+    if (strcmp(username_field, admin_us) == 0)
+    {
         char username1[10];
         bg_content(37, 130);
         outerFrame(37, 131);
@@ -928,7 +1021,8 @@ void Transaction(char username_field[])
         printf("< < Tekan Esc (Escape) Untuk Kembali");
         username_valid(username1, 87, 3);
         // gets(username1);
-        for (int i = 0; i < sizeof(user_list); i++) {
+        for (int i = 0; i < sizeof(user_list); i++)
+        {
             if (strcmp(user_list[i].username, username1) == 0)
             {
                 position(64, 5);
@@ -936,12 +1030,14 @@ void Transaction(char username_field[])
                 break;
             }
         }
-        while ((pilih = getch()) != 27) {
+        while ((pilih = getch()) != 27)
+        {
             menupilih = 0;
         }
         AdminMenu();
     }
-    else {
+    else
+    {
         int a;
         cursor(false);
         bg_content(37, 130);
@@ -957,9 +1053,11 @@ void Transaction(char username_field[])
         printf("< < Tekan Esc (Escape) Untuk Kembali");
         int read = 0;
         fr = fopen("./list_debitur.txt", "r");
-        while (!feof(fr)) {
+        while (!feof(fr))
+        {
             fscanf(fr, USER_DEBITUR_OUT, &loan_user.nik, &loan_user.balance_loan, &loan_user.long_loan, &loan_user.remaining_loan, &loan_user.username, &loan_user.password);
-            if (strcmp(username_field, loan_user.username) == 0) {
+            if (strcmp(username_field, loan_user.username) == 0)
+            {
                 fclose(fr);
                 read = 1;
                 position(45, 11);
@@ -974,9 +1072,11 @@ void Transaction(char username_field[])
                 printf("Sisa Waktu Pinjaman : %s Bulan", loan_user.remaining_loan);
                 break;
             }
-            else read = 0;
+            else
+                read = 0;
         }
-        if (read == 1 && strcmp(username_field, loan_user.username) == 0) {
+        if (read == 1 && strcmp(username_field, loan_user.username) == 0)
+        {
             background_color(YELLOW);
             text_color(DARK_YELLOW);
             position(99, 23);
@@ -1001,9 +1101,12 @@ void Transaction(char username_field[])
             printf("                         ");
             menupilih = 1;
             background_color(GRAY);
-            while ((pilih = getch()) != 13) {
-                if (pilih == 80) {
-                    if (menupilih == 1) {
+            while ((pilih = getch()) != 13)
+            {
+                if (pilih == 80)
+                {
+                    if (menupilih == 1)
+                    {
                         background_color(DARK_YELLOW);
                         text_color(YELLOW);
                         position(99, 23);
@@ -1030,7 +1133,8 @@ void Transaction(char username_field[])
                         printf("                         ");
                         menupilih = 2;
                     }
-                    else if (menupilih == 2) {
+                    else if (menupilih == 2)
+                    {
                         background_color(DARK_YELLOW);
                         text_color(YELLOW);
                         position(99, 23);
@@ -1057,7 +1161,8 @@ void Transaction(char username_field[])
                         printf("                         ");
                         menupilih = 3;
                     }
-                    else {
+                    else
+                    {
                         background_color(YELLOW);
                         text_color(DARK_YELLOW);
                         position(99, 23);
@@ -1085,8 +1190,10 @@ void Transaction(char username_field[])
                         menupilih = 1;
                     }
                 }
-                else if (pilih == 72) {
-                    if (menupilih == 3) {
+                else if (pilih == 72)
+                {
+                    if (menupilih == 3)
+                    {
                         position(99, 23);
                         background_color(DARK_YELLOW);
                         text_color(YELLOW);
@@ -1113,7 +1220,8 @@ void Transaction(char username_field[])
                         printf("                         ");
                         menupilih = 2;
                     }
-                    else if (menupilih == 2) {
+                    else if (menupilih == 2)
+                    {
                         position(99, 23);
                         background_color(YELLOW);
                         text_color(DARK_YELLOW);
@@ -1140,7 +1248,8 @@ void Transaction(char username_field[])
                         printf("                         ");
                         menupilih = 1;
                     }
-                    else {
+                    else
+                    {
                         background_color(DARK_YELLOW);
                         text_color(YELLOW);
                         position(99, 23);
@@ -1168,56 +1277,70 @@ void Transaction(char username_field[])
                         menupilih = 3;
                     }
                 }
-                else if (pilih == 27) {
+                else if (pilih == 27)
+                {
                     menupilih = 0;
                     break;
                 }
             }
-            if (menupilih == 0) {
+            if (menupilih == 0)
+            {
                 UserMenu(username_field);
             }
-            else if (menupilih == 1) {
+            else if (menupilih == 1)
+            {
                 Payment(username_field);
-            } else if (menupilih == 2) {
+            }
+            else if (menupilih == 2)
+            {
                 transfer(username_field);
-            } else if (menupilih == 3) {
-                transHist(username_field);
+            }
+            else if (menupilih == 3)
+            {
+                transactionHistory(username_field);
             }
         }
-        else {
+        else
+        {
             position(27, 23);
             printf("Data Tidak Ada.");
-            while ((pilih = getch()) != 27) {
+            while ((pilih = getch()) != 27)
+            {
                 menupilih = 0;
             }
             UserMenu(username_field);
         }
     }
 }
-void transHist(char username_field[]) {
+void transactionHistory(char username_field[])
+{
     cursor(false);
     bg_content(37, 130);
     outerFrame(37, 131);
     text_color(YELLOW);
     position(4, 34);
     printf("< < Tekan Esc (Escape) Untuk Kembali");
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 10; i++)
+    {
         position(4, 7 + i + 1);
         printf("%d. %s", i + 1, loan[i].balance_loan);
     }
-    while ((pilih = getch()) != 27) {
+    while ((pilih = getch()) != 27)
+    {
         menupilih = 0;
     }
     Transaction(username_field);
 }
-void transfer(char username_field[]) {
+void transfer(char username_field[])
+{
     cursor(false);
     bg_content(37, 130);
     outerFrame(37, 131);
     text_color(YELLOW);
     position(4, 34);
     printf("< < Tekan Esc (Escape) Untuk Kembali");
-    while ((pilih = getch()) != 27) {
+    while ((pilih = getch()) != 27)
+    {
         menupilih = 0;
     }
     Transaction(username_field);
@@ -1260,11 +1383,13 @@ void ApplyForLoan(char as[])
     printf("Total Pinjaman = Rp.%10d", pinjaman);
     position(46, 16);
     printf("Lama  Pinjaman = %5d Bulan", bulan);
-    while((pilih = getch()) != 13)
+    while ((pilih = getch()) != 13)
     {
-        if (pilih == 77 && a <= 51 && pinjaman < 20000000) {
+        if (pilih == 77 && a <= 51 && pinjaman < 20000000)
+        {
             a += 3;
-            if (a > 3) {
+            if (a > 3)
+            {
                 b = a - 3;
                 background_color(DARK_WHITE);
                 position(31 + b, 12);
@@ -1279,8 +1404,10 @@ void ApplyForLoan(char as[])
                 text_color(YELLOW);
                 printf("Cicilan Perbulan: Rp. %10d/bulan", pinjaman / bulan);
             }
-            else {
-                if (a <= 3) {
+            else
+            {
+                if (a <= 3)
+                {
                     a = 3;
                     b = a - 3;
                 }
@@ -1298,9 +1425,11 @@ void ApplyForLoan(char as[])
                 printf("Cicilan Perbulan: Rp. %10d/bulan", pinjaman / bulan);
             }
         }
-        else if (pilih == 75 && a >= 0 && pinjaman > 2000000) {
+        else if (pilih == 75 && a >= 0 && pinjaman > 2000000)
+        {
             a -= 3;
-            if (a >= 0) {
+            if (a >= 0)
+            {
                 b = a + 3;
                 background_color(DARK_WHITE);
                 position(31 + b, 12);
@@ -1315,8 +1444,10 @@ void ApplyForLoan(char as[])
                 text_color(YELLOW);
                 printf("Cicilan Perbulan: Rp. %10d/bulan", pinjaman / bulan);
             }
-            else {
-                if (a >= 0) {
+            else
+            {
+                if (a >= 0)
+                {
                     a = 3;
                 }
                 background_color(DARK_WHITE);
@@ -1338,11 +1469,13 @@ void ApplyForLoan(char as[])
     }
     pilih = 0;
     a = b = 0;
-    while((pilih = getch()) != 13)
+    while ((pilih = getch()) != 13)
     {
-        if (pilih == 77 && a <= 52) {
+        if (pilih == 77 && a <= 52)
+        {
             a += 4;
-            if (a > 4) {
+            if (a > 4)
+            {
                 b = a - 4;
                 background_color(DARK_WHITE);
                 position(32 + b, 15);
@@ -1357,8 +1490,10 @@ void ApplyForLoan(char as[])
                 text_color(YELLOW);
                 printf("Cicilan Perbulan: Rp. %10d/bulan", pinjaman / bulan);
             }
-            else {
-                if (a <= 4) {
+            else
+            {
+                if (a <= 4)
+                {
                     a = 4;
                     b = a - 4;
                 }
@@ -1376,9 +1511,11 @@ void ApplyForLoan(char as[])
                 printf("Cicilan Perbulan: Rp. %10d/bulan", pinjaman / bulan);
             }
         }
-        else if (pilih == 75 && a > 0) {
+        else if (pilih == 75 && a > 0)
+        {
             a -= 4;
-            if (a >= 0) {
+            if (a >= 0)
+            {
                 b = a + 4;
                 background_color(DARK_WHITE);
                 position(32 + b, 15);
@@ -1394,8 +1531,10 @@ void ApplyForLoan(char as[])
                 printf("Cicilan Perbulan: Rp. %10d/bulan", pinjaman / bulan);
                 position(42, 19);
             }
-            else {
-                if (a >= 0) {
+            else
+            {
+                if (a >= 0)
+                {
                     a = 4;
                     b = a + 4;
                     background_color(DARK_WHITE);
@@ -1423,7 +1562,7 @@ void ApplyForLoan(char as[])
     printf("", itoa(bulan, loan_user.long_loan, 10));
     printf("", itoa(bulan, loan_user.remaining_loan, 10));
     fa = fopen("./list_debitur.txt", "a");
-    fprintf(fa, USER_DEBITUR_IN, user1.nik, loan_user.balance_loan, loan_user.long_loan, loan_user.remaining_loan, user1.username, user1.password);
+    fprintf(fa, USER_DEBITUR_IN, user1.nik, loan_user.balance_loan, loan_user.long_loan, loan_user.remaining_loan, user1.username, user1.password, "\n");
     fclose(fa);
     UserMenu(user1.username);
 }
@@ -1475,12 +1614,14 @@ void disp_main()
     printf("Lama  Pinjaman = %5d Bulan", bulan);
     position(10, 36);
     printf("Gunakan Panah Kiri Geser Slider Ke Kiri, Gunakan Panah Kanan Untuk Geser Slider Ke Kanan, Enter Untuk Confirm");
-    while((pilih = getch()) != 13)
+    while ((pilih = getch()) != 13)
     {
         cursor(false);
-        if (pilih == 77 && a <= 51 && pinjaman < 20000000) {
+        if (pilih == 77 && a <= 51 && pinjaman < 20000000)
+        {
             a += 3;
-            if (a > 3) {
+            if (a > 3)
+            {
                 b = a - 3;
                 background_color(DARK_WHITE);
                 position(31 + b, 12);
@@ -1495,8 +1636,10 @@ void disp_main()
                 text_color(YELLOW);
                 printf("Cicilan Perbulan: Rp. %10d/bulan", pinjaman / bulan);
             }
-            else {
-                if (a <= 3) {
+            else
+            {
+                if (a <= 3)
+                {
                     a = 3;
                     b = a - 3;
                 }
@@ -1514,9 +1657,11 @@ void disp_main()
                 printf("Cicilan Perbulan: Rp. %10d/bulan", pinjaman / bulan);
             }
         }
-        else if (pilih == 75 && a >= 0 && pinjaman > 2000000) {
+        else if (pilih == 75 && a >= 0 && pinjaman > 2000000)
+        {
             a -= 3;
-            if (a >= 0) {
+            if (a >= 0)
+            {
                 b = a + 3;
                 background_color(DARK_WHITE);
                 position(31 + b, 12);
@@ -1531,8 +1676,10 @@ void disp_main()
                 text_color(YELLOW);
                 printf("Cicilan Perbulan: Rp. %10d/bulan", pinjaman / bulan);
             }
-            else {
-                if (a >= 0) {
+            else
+            {
+                if (a >= 0)
+                {
                     a = 3;
                 }
                 background_color(DARK_WHITE);
@@ -1556,11 +1703,13 @@ void disp_main()
     a = b = 0;
     position(10, 36);
     printf("Gunakan Panah Kiri Geser Slider Ke Kiri, Gunakan Panah Kanan Untuk Geser Slider Ke Kanan, Enter Untuk Confirm");
-    while((pilih = getch()) != 13)
+    while ((pilih = getch()) != 13)
     {
-        if (pilih == 77 && a <= 52) {
+        if (pilih == 77 && a <= 52)
+        {
             a += 4;
-            if (a > 4) {
+            if (a > 4)
+            {
                 b = a - 4;
                 background_color(DARK_WHITE);
                 position(32 + b, 15);
@@ -1575,8 +1724,10 @@ void disp_main()
                 text_color(YELLOW);
                 printf("Cicilan Perbulan: Rp. %10d/bulan", pinjaman / bulan);
             }
-            else {
-                if (a <= 4) {
+            else
+            {
+                if (a <= 4)
+                {
                     a = 4;
                     b = a - 4;
                 }
@@ -1594,9 +1745,11 @@ void disp_main()
                 printf("Cicilan Perbulan: Rp. %10d/bulan", pinjaman / bulan);
             }
         }
-        else if (pilih == 75 && a > 0) {
+        else if (pilih == 75 && a > 0)
+        {
             a -= 4;
-            if (a >= 0) {
+            if (a >= 0)
+            {
                 b = a + 4;
                 background_color(DARK_WHITE);
                 position(32 + b, 15);
@@ -1612,8 +1765,10 @@ void disp_main()
                 printf("Cicilan Perbulan: Rp. %10d/bulan", pinjaman / bulan);
                 position(42, 19);
             }
-            else {
-                if (a >= 0) {
+            else
+            {
+                if (a >= 0)
+                {
                     a = 4;
                     b = a + 4;
                     background_color(DARK_WHITE);
@@ -1653,9 +1808,12 @@ void disp_main()
     printf("Ajukan Pinjaman\n");
     menupilih = 1;
     background_color(GRAY);
-    while ((pilih = getch()) != 13) {
-        if (pilih == 80) {
-            if (menupilih == 1 || menupilih == 3) {
+    while ((pilih = getch()) != 13)
+    {
+        if (pilih == 80)
+        {
+            if (menupilih == 1 || menupilih == 3)
+            {
                 position(56, 22);
                 text_color(YELLOW);
                 printf("Ajukan Pinjaman\n");
@@ -1667,7 +1825,8 @@ void disp_main()
                 printf("i. Tentang Aplikasi");
                 menupilih = 2;
             }
-            else {
+            else
+            {
                 position(56, 22);
                 text_color(DARK_YELLOW);
                 printf("Ajukan Pinjaman\n");
@@ -1677,8 +1836,10 @@ void disp_main()
                 menupilih = 1;
             }
         }
-        else if (pilih == 72) {
-            if (menupilih == 2 || menupilih == 3) {
+        else if (pilih == 72)
+        {
+            if (menupilih == 2 || menupilih == 3)
+            {
                 position(56, 22);
                 text_color(DARK_YELLOW);
                 printf("Ajukan Pinjaman\n");
@@ -1690,7 +1851,8 @@ void disp_main()
                 printf("i. Tentang Aplikasi");
                 menupilih = 1;
             }
-            else {
+            else
+            {
                 position(56, 22);
                 text_color(YELLOW);
                 printf("Ajukan Pinjaman\n");
@@ -1700,8 +1862,10 @@ void disp_main()
                 menupilih = 2;
             }
         }
-        else if (pilih == 73 || pilih == 105) {
-            if (menupilih == 3) {
+        else if (pilih == 73 || pilih == 105)
+        {
+            if (menupilih == 3)
+            {
                 position(56, 22);
                 text_color(DARK_YELLOW);
                 printf("Ajukan Pinjaman\n");
@@ -1713,7 +1877,8 @@ void disp_main()
                 printf("i. Tentang Aplikasi");
                 menupilih = 1;
             }
-            else {
+            else
+            {
                 position(56, 22);
                 text_color(YELLOW);
                 printf("Ajukan Pinjaman\n");
@@ -1726,22 +1891,30 @@ void disp_main()
                 menupilih = 3;
             }
         }
-        else if (pilih == 9) {
-            if(no == 1) {
+        else if (pilih == 9)
+        {
+            if (no == 1)
+            {
                 menupilih = 0;
                 break;
             }
             no = 1;
         }
     }
-    if (menupilih == 0) {
+    if (menupilih == 0)
+    {
         confirm(0);
     }
-    else if (menupilih == 1) {
+    else if (menupilih == 1)
+    {
         SignUp(pinjaman, bulan);
-    } else if (menupilih == 2) {
+    }
+    else if (menupilih == 2)
+    {
         Login();
-    } else if (menupilih == 3) {
+    }
+    else if (menupilih == 3)
+    {
         About();
     }
 }
@@ -1785,9 +1958,12 @@ void AdminMenu()
     printf("%c%c ", 219, 219);
     menupilih = 1;
     no = 0;
-    while((pilih = getch()) != 13) {
-        if (pilih == 72) {
-            if (menupilih == 1) {
+    while ((pilih = getch()) != 13)
+    {
+        if (pilih == 72)
+        {
+            if (menupilih == 1)
+            {
                 position(5, 23);
                 text_color(YELLOW);
                 printf("%c%c ", 219, 219);
@@ -1808,7 +1984,8 @@ void AdminMenu()
                 printf("%c%c ", 219, 219);
                 menupilih = 3;
             }
-            else if (menupilih == 3) {
+            else if (menupilih == 3)
+            {
                 position(5, 19);
                 text_color(YELLOW);
                 printf("%c%c ", 219, 219);
@@ -1829,7 +2006,8 @@ void AdminMenu()
                 printf("%c%c ", 219, 219);
                 menupilih = 2;
             }
-            else {
+            else
+            {
                 position(5, 15);
                 text_color(YELLOW);
                 printf("%c%c ", 219, 219);
@@ -1851,8 +2029,10 @@ void AdminMenu()
                 menupilih = 1;
             }
         }
-        else if (pilih == 80) {
-            if (menupilih == 3) {
+        else if (pilih == 80)
+        {
+            if (menupilih == 3)
+            {
                 position(5, 15);
                 text_color(YELLOW);
                 printf("%c%c ", 219, 219);
@@ -1873,7 +2053,8 @@ void AdminMenu()
                 printf("%c%c ", 219, 219);
                 menupilih = 1;
             }
-            else if (menupilih == 1) {
+            else if (menupilih == 1)
+            {
                 position(5, 19);
                 text_color(YELLOW);
                 printf("%c%c ", 219, 219);
@@ -1894,7 +2075,8 @@ void AdminMenu()
                 printf("%c%c ", 219, 219);
                 menupilih = 2;
             }
-            else {
+            else
+            {
                 position(5, 23);
                 text_color(YELLOW);
                 printf("%c%c ", 219, 219);
@@ -1916,40 +2098,48 @@ void AdminMenu()
                 menupilih = 3;
             }
         }
-        else if (pilih == 9) {
-            if (no == 1) {
+        else if (pilih == 9)
+        {
+            if (no == 1)
+            {
                 menupilih = 0;
                 break;
             }
             no = 1;
         }
     }
-    if (menupilih == 1) {
+    if (menupilih == 1)
+    {
         background_color(GRAY);
         AccountList();
     }
-    else if (menupilih == 2) {
+    else if (menupilih == 2)
+    {
         background_color(GRAY);
         About();
     }
-    else if (menupilih == 3) {
+    else if (menupilih == 3)
+    {
         background_color(GRAY);
         Transaction(admin_us);
     }
-    else if (menupilih == 0) {
+    else if (menupilih == 0)
+    {
         confirm(1);
     }
-
 }
 void UserMenu(char name[])
 {
     int i = 0;
     fr = fopen("list_debitur.txt", "r");
-    while (!feof(fr)) {
+    while (!feof(fr))
+    {
         fscanf(fr, USER_DEBITUR_OUT, &loan_user1.nik, &loan_user1.balance_loan, &loan_user1.long_loan, &loan_user1.remaining_loan, &loan_user1.username, &loan_user1.password);
-        if (strcmp(loan_user1.username, "\0") == 0) {
+        if (strcmp(loan_user1.username, "\0") == 0)
+        {
         }
-        else {
+        else
+        {
             strcpy(loan[i].nik, loan_user1.nik);
             strcpy(loan[i].balance_loan, loan_user1.balance_loan);
             strcpy(loan[i].long_loan, loan_user1.long_loan);
@@ -2002,9 +2192,12 @@ void UserMenu(char name[])
     printf("%c%c ", 219, 219);
     menupilih = 1;
     no = 0;
-    while((pilih = getch()) != 13) {
-        if (pilih == 72) {
-            if (menupilih == 1) {
+    while ((pilih = getch()) != 13)
+    {
+        if (pilih == 72)
+        {
+            if (menupilih == 1)
+            {
                 position(5, 23);
                 text_color(YELLOW);
                 printf("%c%c ", 219, 219);
@@ -2025,7 +2218,8 @@ void UserMenu(char name[])
                 printf("%c%c ", 219, 219);
                 menupilih = 3;
             }
-            else if (menupilih == 3) {
+            else if (menupilih == 3)
+            {
                 position(5, 19);
                 text_color(YELLOW);
                 printf("%c%c ", 219, 219);
@@ -2046,7 +2240,8 @@ void UserMenu(char name[])
                 printf("%c%c ", 219, 219);
                 menupilih = 2;
             }
-            else {
+            else
+            {
                 position(5, 15);
                 text_color(YELLOW);
                 printf("%c%c ", 219, 219);
@@ -2068,8 +2263,10 @@ void UserMenu(char name[])
                 menupilih = 1;
             }
         }
-        else if (pilih == 80) {
-            if (menupilih == 3) {
+        else if (pilih == 80)
+        {
+            if (menupilih == 3)
+            {
                 position(5, 15);
                 text_color(YELLOW);
                 printf("%c%c ", 219, 219);
@@ -2090,7 +2287,8 @@ void UserMenu(char name[])
                 printf("%c%c ", 219, 219);
                 menupilih = 1;
             }
-            else if (menupilih == 1) {
+            else if (menupilih == 1)
+            {
                 position(5, 19);
                 text_color(YELLOW);
                 printf("%c%c ", 219, 219);
@@ -2111,7 +2309,8 @@ void UserMenu(char name[])
                 printf("%c%c ", 219, 219);
                 menupilih = 2;
             }
-            else {
+            else
+            {
                 position(5, 23);
                 text_color(YELLOW);
                 printf("%c%c ", 219, 219);
@@ -2133,35 +2332,45 @@ void UserMenu(char name[])
                 menupilih = 3;
             }
         }
-        else if (pilih == 9) {
-            if (no == 1) {
+        else if (pilih == 9)
+        {
+            if (no == 1)
+            {
                 menupilih = 0;
                 break;
             }
             no = 1;
         }
     }
-    if (menupilih == 1) {
+    if (menupilih == 1)
+    {
         Profile(name);
     }
-    else if (menupilih == 2) {
+    else if (menupilih == 2)
+    {
         Transaction(name);
     }
-    else if(menupilih == 3) {
+    else if (menupilih == 3)
+    {
         int read = 0;
-        for (int a = 0; a < 10; a++) {
-            if(strcmp(loan[a].username, name) == 0) {
+        for (int a = 0; a < 10; a++)
+        {
+            if (strcmp(loan[a].username, name) == 0)
+            {
                 read = 1;
                 break;
             }
-            else {
+            else
+            {
                 read = 0;
             }
         }
-        if (read == 0) {
+        if (read == 0)
+        {
             ApplyForLoan(name);
         }
-        else {
+        else
+        {
             background_color(GRAY);
             position(3, 28);
             text_color(YELLOW);
@@ -2170,10 +2379,10 @@ void UserMenu(char name[])
             UserMenu(name);
         }
     }
-    else if(menupilih == 0) {
+    else if (menupilih == 0)
+    {
         confirm(1);
     }
-
 }
 void Disclaimer()
 {
@@ -2264,7 +2473,7 @@ void Contacts()
     position(3, 21);
     printf("         ");
     position(3, 23);
-    printf("KELOMPOK 7 URANUSS");
+    printf("KELOMPOK 7 URANUS");
     position(3, 25);
     printf("");
     position(3, 27);
@@ -2272,61 +2481,76 @@ void Contacts()
     position(3, 29);
     printf("");
 }
-void confirm(int exit1) {
+void confirm(int exit1)
+{
     cursor(false);
     bg_content1(62, 5, GRAY, 30, 15);
     Frame(62, 6, DARK_YELLOW, 30, 15);
     text_color(YELLOW);
     position(47, 17);
-    if (exit1 == 0) {
+    if (exit1 == 0)
+    {
         printf("Apakah Anda Yakin Ingin Keluar?");
         position(76, 19);
         printf("Y/y");
         position(86, 19);
         printf("T/t");
-        while((pilih = getch()) != 32) {
-            if (pilih == 84 || pilih == 116) {
+        while ((pilih = getch()) != 32)
+        {
+            if (pilih == 84 || pilih == 116)
+            {
                 menupilih = 0;
                 break;
             }
-            else if (pilih == 89 || pilih == 121) {
+            else if (pilih == 89 || pilih == 121)
+            {
                 menupilih = 1;
                 break;
             }
         }
-        if (menupilih == 1) {
+        if (menupilih == 1)
+        {
             Sleep(550);
             exit(0);
         }
-        else if (menupilih == 0) {
+        else if (menupilih == 0)
+        {
             disp_main();
         }
     }
-    else {
+    else
+    {
         printf("Apakah Anda Yakin Ingin Logout?");
         position(76, 19);
         printf("Y/y");
         position(86, 19);
         printf("T/t");
-        while((pilih = getch()) != 32) {
-            if (pilih == 84 || pilih == 116) {
+        while ((pilih = getch()) != 32)
+        {
+            if (pilih == 84 || pilih == 116)
+            {
                 menupilih = 0;
                 break;
             }
-            else if (pilih == 89 || pilih == 121) {
+            else if (pilih == 89 || pilih == 121)
+            {
                 menupilih = 1;
                 break;
             }
         }
-        if (menupilih == 1) {
+        if (menupilih == 1)
+        {
             Sleep(150);
             Login();
         }
-        else if (menupilih == 0) {
-            if (strcmp(username, admin_us) == 0 && strcmp(password, admin_pw) == 0) {
+        else if (menupilih == 0)
+        {
+            if (strcmp(username, admin_us) == 0 && strcmp(password, admin_pw) == 0)
+            {
                 AdminMenu();
             }
-            else {
+            else
+            {
                 UserMenu(user1.username);
             }
         }
