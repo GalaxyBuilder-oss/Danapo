@@ -3,8 +3,6 @@
 #include "libs_s.c"
 #include "validation.c"
 
-#define MAX_ARRAY 100
-
 typedef struct
 {
     char nik[17];
@@ -26,12 +24,16 @@ typedef struct
     char username[10];
     char password[7];
 } Debitur;
+typedef struct
+{
+    char username[10];
+    char password[7]; // 612811
+} UserLogin;
 
 char pilih;
 int menupilih = 0;
 int no = 0;
 int salah = 0;
-int yyyy = 0;
 static char username[10] = {}, password[10] = {};
 char admin_us[] = "admin123";
 char admin_pw[] = "123456";
@@ -45,27 +47,28 @@ FILE *fw, *fw1, *fo, *fo1, *fa, *fa1, *fr, *fr1;
 
 Data user, user1, user_login, user_list[50];
 Debitur loan[50], loan_user, loan_user1, loan_list[50];
+UserLogin userLogin;
 time_t waktu;
 
 ///                         Prototype                      ///
-void delete_account(char username_field[]);
+void DeleteAccount(char username_field[]);
 void AdminMenu();
 void AccountList();
 void Transaction(char username_field[]);
-void userData();
+void UserData();
 void UserMenu(char name[]);
 void Login();
 void SignUp(int loan, int month);
 void About();
-void disp_main();
-void confirm(int exit1);
+void DisplayMain();
+void ConfirmExit(int exit1);
 void Disclaimer();
 void TermOfService();
 void Contacts();
-void transfer(char username_field[]);
-void transactionHistory(char username_fields[]);
+void Transfer(char username_field[]);
+void TransactionHistory(char username_fields[]);
 
-void file_check()
+void FileCheck()
 {
     background_color(BLACK);
     cursor(false);
@@ -105,7 +108,7 @@ void file_check()
             check_file = true;
         }
     } while (check_file);
-    disp_main();
+    DisplayMain();
 }
 void Login_Val(char username_field[], char password_field[])
 {
@@ -230,12 +233,12 @@ void Login_Val(char username_field[], char password_field[])
             }
             if (menupilih == 0)
             {
-                confirm(0);
+                ConfirmExit(0);
             }
             else if (menupilih == 1)
             {
                 salah = 0;
-                disp_main();
+                DisplayMain();
             }
         }
         else
@@ -275,11 +278,11 @@ void Login()
     printf("                       ");
     position(61, 20);
     printf("                       ");
-    username_valid(username, 62, 13);
-    password_valid(password, 62, 19);
+    username_valid(userLogin.username, 62, 13);
+    password_valid(userLogin.password, 62, 19);
     background_color(GRAY);
     text_color(YELLOW);
-    Login_Val(username, password);
+    Login_Val(userLogin.username, userLogin.password);
 }
 void SignUp(int loan, int month)
 {
@@ -291,9 +294,9 @@ void SignUp(int loan, int month)
     Logo(2);
     position(12, 3);
     printf(" S I G N U P");
-    userData(loan, month);
+    UserData(loan, month);
 }
-void userData(int loan, int month)
+void UserData(int loan, int month)
 {
     int read = 0;
     cursor(true);
@@ -359,7 +362,7 @@ void userData(int loan, int month)
         position(5, 25);
         printf("NIK Telah Terdaftar, Ulangi Pendaftaran");
         Sleep(750);
-        disp_main();
+        DisplayMain();
     }
 }
 void Payment(char username_field[])
@@ -718,7 +721,7 @@ void About()
             break;
         }
     }
-    disp_main();
+    DisplayMain();
 }
 void AccountList()
 {
@@ -880,7 +883,7 @@ void AccountList()
     else if (menupilih == 2)
         AdminMenu(); // Edit
     else if (menupilih == 3)
-        delete_account(user.username); // Hapus
+        DeleteAccount(user.username); // Hapus
     else
         AccountList();
 }
@@ -921,7 +924,7 @@ void edit_account(char username_field[])
     }
     AccountList();
 }
-void delete_account(char username_field[])
+void DeleteAccount(char username_field[])
 {
     for (int i = 0; i < 10; i++)
     {
@@ -1293,11 +1296,11 @@ void Transaction(char username_field[])
             }
             else if (menupilih == 2)
             {
-                transfer(username_field);
+                Transfer(username_field);
             }
             else if (menupilih == 3)
             {
-                transactionHistory(username_field);
+                TransactionHistory(username_field);
             }
         }
         else
@@ -1312,7 +1315,7 @@ void Transaction(char username_field[])
         }
     }
 }
-void transactionHistory(char username_field[])
+void TransactionHistory(char username_field[])
 {
     cursor(false);
     bg_content(37, 130);
@@ -1331,7 +1334,7 @@ void transactionHistory(char username_field[])
     }
     Transaction(username_field);
 }
-void transfer(char username_field[])
+void Transfer(char username_field[])
 {
     cursor(false);
     bg_content(37, 130);
@@ -1562,11 +1565,11 @@ void ApplyForLoan(char as[])
     printf("", itoa(bulan, loan_user.long_loan, 10));
     printf("", itoa(bulan, loan_user.remaining_loan, 10));
     fa = fopen("./list_debitur.txt", "a");
-    fprintf(fa, USER_DEBITUR_IN, user1.nik, loan_user.balance_loan, loan_user.long_loan, loan_user.remaining_loan, user1.username, user1.password, "\n");
+    fprintf(fa, USER_DEBITUR_IN, user1.nik, loan_user.balance_loan, loan_user.long_loan, loan_user.remaining_loan, user1.username, user1.password);
     fclose(fa);
     UserMenu(user1.username);
 }
-void disp_main()
+void DisplayMain()
 {
     int a = 0, b = 0, pinjaman = 2000000, pinjaman1 = 1000000, bulan = 6, bulan1 = 1;
     cursor(false);
@@ -1613,7 +1616,7 @@ void disp_main()
     position(46, 16);
     printf("Lama  Pinjaman = %5d Bulan", bulan);
     position(10, 36);
-    printf("Gunakan Panah Kiri Geser Slider Ke Kiri, Gunakan Panah Kanan Untuk Geser Slider Ke Kanan, Enter Untuk Confirm");
+    printf("Gunakan Panah Kiri Geser Slider Ke Kiri, Gunakan Panah Kanan Untuk Geser Slider Ke Kanan, Enter Untuk ConfirmExit");
     while ((pilih = getch()) != 13)
     {
         cursor(false);
@@ -1702,7 +1705,7 @@ void disp_main()
     pilih = 0;
     a = b = 0;
     position(10, 36);
-    printf("Gunakan Panah Kiri Geser Slider Ke Kiri, Gunakan Panah Kanan Untuk Geser Slider Ke Kanan, Enter Untuk Confirm");
+    printf("Gunakan Panah Kiri Geser Slider Ke Kiri, Gunakan Panah Kanan Untuk Geser Slider Ke Kanan, Enter Untuk ConfirmExit");
     while ((pilih = getch()) != 13)
     {
         if (pilih == 77 && a <= 52)
@@ -1802,7 +1805,7 @@ void disp_main()
     position(10, 36);
     printf("                                                                                                             ");
     position(10, 36);
-    printf("%c Untuk Geser Menu Ke Bawah, %c Untuk Geser Menu Ke Atas, Enter Untuk Confirm Dan Tab 2x Untuk Keluar", 24, 25);
+    printf("%c Untuk Geser Menu Ke Bawah, %c Untuk Geser Menu Ke Atas, Enter Untuk ConfirmExit Dan Tab 2x Untuk Keluar", 24, 25);
     position(56, 22);
     text_color(DARK_YELLOW);
     printf("Ajukan Pinjaman\n");
@@ -1903,7 +1906,7 @@ void disp_main()
     }
     if (menupilih == 0)
     {
-        confirm(0);
+        ConfirmExit(0);
     }
     else if (menupilih == 1)
     {
@@ -2125,7 +2128,7 @@ void AdminMenu()
     }
     else if (menupilih == 0)
     {
-        confirm(1);
+        ConfirmExit(1);
     }
 }
 void UserMenu(char name[])
@@ -2381,7 +2384,7 @@ void UserMenu(char name[])
     }
     else if (menupilih == 0)
     {
-        confirm(1);
+        ConfirmExit(1);
     }
 }
 void Disclaimer()
@@ -2481,7 +2484,7 @@ void Contacts()
     position(3, 29);
     printf("");
 }
-void confirm(int exit1)
+void ConfirmExit(int exit1)
 {
     cursor(false);
     bg_content1(62, 5, GRAY, 30, 15);
@@ -2515,7 +2518,7 @@ void confirm(int exit1)
         }
         else if (menupilih == 0)
         {
-            disp_main();
+            DisplayMain();
         }
     }
     else
@@ -2559,5 +2562,5 @@ void confirm(int exit1)
 void main()
 {
     win_control();
-    file_check();
+    FileCheck();
 }

@@ -125,12 +125,14 @@ void outerFrame(int x, int y)
 }
 void Logo(int logo) {
     if (logo == 0) {
+        // Danapo Logo
         position(45, 3);printf("  _ \\                                ");
         position(45, 4);printf("  |  |  _` |    \\    _` |  _ \\   _ \\ ");
         position(45, 5);printf(" ___/ \\__,_| _| _| \\__,_| .__/ \\___/ ");
         position(45, 6); printf("                         _|          ");
     }
     else if (logo == 1) {
+        // Login Logo
         position(3, 3);
         printf("  |                 _)       ");
         position(3, 4);
@@ -141,6 +143,7 @@ void Logo(int logo) {
         printf("             ____/           ");
     }
     else if(logo == 2) {
+        // Signup Logo
         position(3, 3);
         printf("  __| _)               |  |     ");
         position(3, 4);
@@ -151,6 +154,7 @@ void Logo(int logo) {
         printf("         ____/            _|    ");
     }
     else if(logo == 3) {
+        // About Logo
         position(3, 3);
         printf("   \\    |                 |   ");
         position(3, 4);
@@ -159,6 +163,7 @@ void Logo(int logo) {
         printf("_/  _\\ _.__/ \\___/ \\_,_| \\__| ");
     }
     else if(logo == 4) {
+        // Transaction Logo
         position(3, 3);
         printf("__ __|                                 |   _)             ");
         position(3, 4);
@@ -167,6 +172,7 @@ void Logo(int logo) {
         printf("  _| _| \\__,_| _| _| ___/ \\__,_| \\__| \\__| _| \\___/ _| _| ");
     }
     else if (logo == 5) {
+        // Loan Logo
         position(3, 3);
         printf(" |                       ");
         position(3, 4);
@@ -183,6 +189,7 @@ void Logo(int logo) {
         printf(" _| _| \\___/ _|   _| _| \\___| ");
     }
     else if (logo == 7) {
+        // Menu Logo
         position(3, 3);
         printf("   \\  |                   ");
         position(3, 4);
@@ -191,6 +198,7 @@ void Logo(int logo) {
         printf(" _|  _| \\___| _| _| \\_,_| ");
     }
     else if (logo == 8){
+        // Register Logo
         position(3, 3);
         printf("  _ \\                                |   ");
         position(3, 4);
@@ -246,6 +254,7 @@ char* itoa(int value, char* buffer, int base);
 void swap(char *x, char *y) {
 	char t = *x; *x = *y; *y = t;
 }
+
 // Function to reverse `buffer[i…j]`
 char* reverse(char *buffer, int i, int j)
 {
@@ -254,6 +263,7 @@ char* reverse(char *buffer, int i, int j)
 	}
 	return buffer;
 }
+
 // Iterative function to implement `itoa()` function in C
 char* itoa(int value, char* buffer, int base)
 {
