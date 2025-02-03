@@ -72,21 +72,21 @@ void FileCheck()
 {
     background_color(BLACK);
     cursor(false);
-    bool check_file = true;
+    bool check_file = false;
     fr = fopen("./data.txt", "r");
     fr1 = fopen("./list_debitur.txt", "r");
     do
     {
         fclose(fr);
         fclose(fr1);
-        outerFrame(37, 131);
-        bg_content(36, 128);
-        position(52, 20);
+        outerFrame(28, 118);
+        bg_content(27, 115);
+        position(52, 13);
         printf("Checking file");
         for (int i = 0; i < 3; i++)
         {
             Sleep(250);
-            position(65 + i, 20);
+            position(65 + i, 13);
             printf(".");
         }
         if (fr == NULL && fr1 == NULL)
@@ -99,14 +99,14 @@ void FileCheck()
             position(52, 13);
             printf("File Tidak Ada, Sedang Membuat File Baru...");
             Sleep(350);
-            check_file = false;
+            check_file = true;
             fclose(fw1);
             fclose(fw);
         }
-        else
-        {
-            check_file = true;
-        }
+        // else
+        // {
+        //     check_file = false;
+        // }
     } while (check_file);
     DisplayMain();
 }
@@ -124,6 +124,7 @@ void Login_Val(char username_field[], char password_field[])
             break;
         }
         fscanf(fr, USER_DATA_OUT, &user_login.nik, &user_login.name, &user_login.dateofbirth, &user_login.address, &user_login.phonenum, &user_login.email, &user_login.username, &user_login.password);
+
         if (strcmp(username_field, user_login.username) == 0 && strcmp(password_field, user_login.password) == 0)
         {
             read = 2;
@@ -254,8 +255,8 @@ void Login_Val(char username_field[], char password_field[])
 void Login()
 {
     cursor(true);
-    bg_content(37, 130);
-    outerFrame(37, 131);
+    outerFrame(28, 118);
+    bg_content(27, 115);
     text_color(YELLOW);
     Logo(1);
     position(12, 3);
@@ -287,9 +288,9 @@ void Login()
 void SignUp(int loan, int month)
 {
     cursor(false);
-    bg_content(36, 128);
-    outerFrame(37, 131);
-    HLine(128, DARK_YELLOW, 1, 7);
+    outerFrame(28, 118);
+    bg_content(27, 115);
+    HLine(115, DARK_YELLOW, 1, 7);
     text_color(YELLOW);
     Logo(2);
     position(12, 3);
@@ -300,7 +301,6 @@ void UserData(int loan, int month)
 {
     int read = 0;
     cursor(true);
-
     position(5, 9);
     printf("NIK           : ");
     nik_valid(user.nik, 21, 9);
@@ -309,9 +309,29 @@ void UserData(int loan, int month)
     name_valid(user.name, 21, 11);
     position(5, 13);
     printf("Tanggal Lahir : 00 / 00 / 0000");
+    position(21, 13);
+    printf("  ");
+    position(38, 13);
+    printf("                          ");
+    position(38, 13);
+    printf("Tanggal Min 01 Maks 31");
     date_valid(user.dateofbirth, 21, 13);
+    position(26, 13);
+    printf("  ");
+    position(38, 13);
+    printf("                          ");
+    position(38, 13);
+    printf("Bulan Min 01 Maks 12");
     month_valid(user.dateofbirth, 26, 13);
+    position(31, 13);
+    printf("    ");
+    position(38, 13);
+    printf("                          ");
+    position(38, 13);
+    printf("Tahun Min 1999 Maks 2100");
     year_valid(user.dateofbirth, 31, 13);
+    position(38, 13);
+    printf("                          ");
     position(5, 15);
     printf("Alamat        : ");
     address_valid(user.address, 21, 15);
@@ -387,8 +407,8 @@ void Payment(char username_field[])
         i++;
     }
     fclose(fr);
-    bg_content(37, 130);
-    outerFrame(37, 131);
+    outerFrame(28, 118);
+    bg_content(27, 115);
     text_color(YELLOW);
     Logo(8);
     position(12, 3);
@@ -492,43 +512,46 @@ void Payment(char username_field[])
         }
         fclose(fw);
     }
-    while ((pilih = getch()) != 27)
-    {
-        menupilih = 0;
-    }
+    // while ((pilih = getch()) != 27)
+    // {
+    //     menupilih = 0;
+    // }
+    Sleep(1250);
     Transaction(username_field);
 }
 void About()
 {
     cursor(false);
-    bg_content(37, 130);
-    outerFrame(37, 131);
+    outerFrame(28, 118);
+    bg_content(27, 115);
     background_color(GRAY);
     text_color(YELLOW);
     Logo(3);
     position(12, 3);
     printf("  A  B  O  U  T");
+    position(74, 3);
+    printf("< < Tekan Esc (Escape) 2x Untuk Kembali");
     background_color(YELLOW);
     text_color(DARK_YELLOW);
-    position(99, 23);
+    position(90, 16);
     printf("                         ");
-    position(98, 24);
+    position(89, 17);
     printf("   D I S C L A I M E R   ");
-    position(97, 25);
+    position(87, 18);
     printf("                         ");
     background_color(DARK_YELLOW);
     text_color(YELLOW);
-    position(97, 27);
+    position(90, 20);
     printf("                         ");
-    position(98, 28);
+    position(89, 21);
     printf("    KETENTUAN LAYANAN    ");
-    position(99, 29);
+    position(88, 22);
     printf("                         ");
-    position(99, 31);
+    position(90, 24);
     printf("                         ");
-    position(98, 32);
+    position(89, 25);
     printf("     K  O  N  T  A  K    ");
-    position(97, 33);
+    position(88, 26);
     printf("                         ");
     menupilih = 1;
     Disclaimer();
@@ -541,27 +564,27 @@ void About()
             {
                 background_color(DARK_YELLOW);
                 text_color(YELLOW);
-                position(99, 23);
+                position(90, 16);
                 printf("                         ");
-                position(98, 24);
+                position(89, 17);
                 printf("   D I S C L A I M E R   ");
-                position(97, 25);
+                position(87, 18);
                 printf("                         ");
                 background_color(YELLOW);
                 text_color(DARK_YELLOW);
-                position(97, 27);
+                position(90, 20);
                 printf("                         ");
-                position(98, 28);
+                position(89, 21);
                 printf("    KETENTUAN LAYANAN    ");
-                position(99, 29);
+                position(88, 22);
                 printf("                         ");
                 background_color(DARK_YELLOW);
                 text_color(YELLOW);
-                position(99, 31);
+                position(90, 24);
                 printf("                         ");
-                position(98, 32);
+                position(89, 25);
                 printf("     K  O  N  T  A  K    ");
-                position(97, 33);
+                position(88, 26);
                 printf("                         ");
                 TermOfService();
                 menupilih = 2;
@@ -571,26 +594,27 @@ void About()
                 background_color(DARK_YELLOW);
                 text_color(YELLOW);
                 position(99, 23);
+                position(90, 16);
                 printf("                         ");
-                position(98, 24);
+                position(89, 17);
                 printf("   D I S C L A I M E R   ");
-                position(97, 25);
+                position(87, 18);
                 printf("                         ");
                 background_color(DARK_YELLOW);
                 text_color(YELLOW);
-                position(97, 27);
+                position(90, 20);
                 printf("                         ");
-                position(98, 28);
+                position(89, 21);
                 printf("    KETENTUAN LAYANAN    ");
-                position(99, 29);
+                position(88, 22);
                 printf("                         ");
                 background_color(YELLOW);
                 text_color(DARK_YELLOW);
-                position(99, 31);
+                position(90, 24);
                 printf("                         ");
-                position(98, 32);
+                position(89, 25);
                 printf("     K  O  N  T  A  K    ");
-                position(97, 33);
+                position(88, 26);
                 printf("                         ");
                 Contacts();
                 menupilih = 3;
@@ -599,27 +623,28 @@ void About()
             {
                 background_color(YELLOW);
                 text_color(DARK_YELLOW);
-                position(99, 23);
+                position(90, 16);
                 printf("                         ");
-                position(98, 24);
+                position(89, 17);
                 printf("   D I S C L A I M E R   ");
-                position(97, 25);
+                position(87, 18);
                 printf("                         ");
                 background_color(DARK_YELLOW);
                 text_color(YELLOW);
-                position(97, 27);
+                position(90, 20);
                 printf("                         ");
-                position(98, 28);
+                position(89, 21);
                 printf("    KETENTUAN LAYANAN    ");
-                position(99, 29);
+                position(88, 22);
                 printf("                         ");
                 position(99, 31);
                 background_color(DARK_YELLOW);
                 text_color(YELLOW);
+                position(90, 24);
                 printf("                         ");
-                position(98, 32);
+                position(89, 25);
                 printf("     K  O  N  T  A  K    ");
-                position(97, 33);
+                position(88, 26);
                 printf("                         ");
                 Disclaimer();
                 menupilih = 1;
@@ -632,26 +657,28 @@ void About()
                 position(99, 23);
                 background_color(DARK_YELLOW);
                 text_color(YELLOW);
+                position(90, 16);
                 printf("                         ");
-                position(98, 24);
+                position(89, 17);
                 printf("   D I S C L A I M E R   ");
-                position(97, 25);
+                position(87, 18);
                 printf("                         ");
                 background_color(YELLOW);
                 text_color(DARK_YELLOW);
-                position(97, 27);
+                position(90, 20);
                 printf("                         ");
-                position(98, 28);
+                position(89, 21);
                 printf("    KETENTUAN LAYANAN    ");
-                position(99, 29);
+                position(88, 22);
                 printf("                         ");
                 background_color(DARK_YELLOW);
                 text_color(YELLOW);
                 position(99, 31);
+                position(90, 24);
                 printf("                         ");
-                position(98, 32);
+                position(89, 25);
                 printf("     K  O  N  T  A  K    ");
-                position(97, 33);
+                position(88, 26);
                 printf("                         ");
                 TermOfService();
                 menupilih = 2;
@@ -661,26 +688,28 @@ void About()
                 position(99, 23);
                 background_color(YELLOW);
                 text_color(DARK_YELLOW);
+                position(90, 16);
                 printf("                         ");
-                position(98, 24);
+                position(89, 17);
                 printf("   D I S C L A I M E R   ");
-                position(97, 25);
+                position(87, 18);
                 printf("                         ");
                 background_color(DARK_YELLOW);
                 text_color(YELLOW);
-                position(97, 27);
+                position(90, 20);
                 printf("                         ");
-                position(98, 28);
+                position(89, 21);
                 printf("    KETENTUAN LAYANAN    ");
-                position(99, 29);
+                position(88, 22);
                 printf("                         ");
                 background_color(DARK_YELLOW);
                 text_color(YELLOW);
                 position(99, 31);
+                position(90, 24);
                 printf("                         ");
-                position(98, 32);
+                position(89, 25);
                 printf("     K  O  N  T  A  K    ");
-                position(97, 33);
+                position(88, 26);
                 printf("                         ");
                 Disclaimer();
                 menupilih = 1;
@@ -690,26 +719,28 @@ void About()
                 background_color(DARK_YELLOW);
                 text_color(YELLOW);
                 position(99, 23);
+                position(90, 16);
                 printf("                         ");
-                position(98, 24);
+                position(89, 17);
                 printf("   D I S C L A I M E R   ");
-                position(97, 25);
+                position(87, 18);
                 printf("                         ");
                 background_color(DARK_YELLOW);
                 text_color(YELLOW);
-                position(97, 27);
+                position(90, 20);
                 printf("                         ");
-                position(98, 28);
+                position(89, 21);
                 printf("    KETENTUAN LAYANAN    ");
-                position(99, 29);
+                position(88, 22);
                 printf("                         ");
                 background_color(YELLOW);
                 text_color(DARK_YELLOW);
                 position(99, 31);
+                position(90, 24);
                 printf("                         ");
-                position(98, 32);
+                position(89, 25);
                 printf("     K  O  N  T  A  K    ");
-                position(97, 33);
+                position(88, 26);
                 printf("                         ");
                 Contacts();
                 menupilih = 3;
@@ -720,6 +751,9 @@ void About()
             menupilih = 0;
             break;
         }
+        text_color(YELLOW);
+        position(74, 3);
+        printf("< < Tekan Esc (Escape) 2x Untuk Kembali");
     }
     DisplayMain();
 }
@@ -969,8 +1003,6 @@ void Profile(char username_field[])
     int read = 0;
     background_color(GRAY);
     text_color(YELLOW);
-    position(3, 28);
-    printf("                    ");
     position(34, 26);
     printf("< < Tekan Esc (Escape) Untuk Kembali");
     fr = fopen("./data.txt", "r");
@@ -1006,9 +1038,9 @@ void Transaction(char username_field[])
     if (strcmp(username_field, admin_us) == 0)
     {
         char username1[10];
-        bg_content(37, 130);
-        outerFrame(37, 131);
-        HLine(128, DARK_YELLOW, 2, 6);
+        outerFrame(28, 118);
+        bg_content(27, 115);
+        HLine(115, DARK_YELLOW, 2, 6);
         VLine(6, DARK_YELLOW, 61, 5);
         text_color(YELLOW);
         Logo(4);
@@ -1037,22 +1069,23 @@ void Transaction(char username_field[])
         {
             menupilih = 0;
         }
-        AdminMenu();
+        if (menupilih == 0)
+            AdminMenu();
     }
     else
     {
         int a;
         cursor(false);
-        bg_content(37, 130);
-        outerFrame(37, 131);
-        HLine(128, DARK_YELLOW, 1, 6);
+        outerFrame(28, 118);
+        bg_content(27, 115);
+        HLine(115, DARK_YELLOW, 1, 6);
         text_color(YELLOW);
         Logo(4);
         position(12, 3);
         printf("%s", user1.username);
         position(25, 9);
         printf("D A T A   T R A N S A K S I");
-        position(4, 34);
+        position(4, 26);
         printf("< < Tekan Esc (Escape) Untuk Kembali");
         int read = 0;
         fr = fopen("./list_debitur.txt", "r");
@@ -1082,25 +1115,25 @@ void Transaction(char username_field[])
         {
             background_color(YELLOW);
             text_color(DARK_YELLOW);
-            position(99, 23);
+            position(89, 16);
             printf("                         ");
-            position(98, 24);
+            position(88, 17);
             printf("   P E M B A Y A R A N   ");
-            position(97, 25);
+            position(87, 18);
             printf("                         ");
             background_color(DARK_YELLOW);
             text_color(YELLOW);
-            position(97, 27);
+            position(87, 20);
             printf("                         ");
-            position(98, 28);
+            position(88, 21);
             printf("    TRANSFER KE  BANK    ");
-            position(99, 29);
+            position(89, 22);
             printf("                         ");
-            position(99, 31);
+            position(89, 24);
             printf("                         ");
-            position(98, 32);
+            position(88, 25);
             printf("   RIWAYAT PEMBAYARAN    ");
-            position(97, 33);
+            position(87, 26);
             printf("                         ");
             menupilih = 1;
             background_color(GRAY);
@@ -1112,27 +1145,27 @@ void Transaction(char username_field[])
                     {
                         background_color(DARK_YELLOW);
                         text_color(YELLOW);
-                        position(99, 23);
+                        position(89, 16);
                         printf("                         ");
-                        position(98, 24);
+                        position(88, 17);
                         printf("   P E M B A Y A R A N   ");
-                        position(97, 25);
+                        position(87, 18);
                         printf("                         ");
                         background_color(YELLOW);
                         text_color(DARK_YELLOW);
-                        position(97, 27);
+                        position(87, 20);
                         printf("                         ");
-                        position(98, 28);
+                        position(88, 21);
                         printf("    TRANSFER KE  BANK    ");
-                        position(99, 29);
+                        position(89, 22);
                         printf("                         ");
                         background_color(DARK_YELLOW);
                         text_color(YELLOW);
-                        position(99, 31);
+                        position(89, 24);
                         printf("                         ");
-                        position(98, 32);
+                        position(88, 25);
                         printf("   RIWAYAT PEMBAYARAN    ");
-                        position(97, 33);
+                        position(87, 26);
                         printf("                         ");
                         menupilih = 2;
                     }
@@ -1140,27 +1173,27 @@ void Transaction(char username_field[])
                     {
                         background_color(DARK_YELLOW);
                         text_color(YELLOW);
-                        position(99, 23);
+                        position(89, 16);
                         printf("                         ");
-                        position(98, 24);
+                        position(88, 17);
                         printf("   P E M B A Y A R A N   ");
-                        position(97, 25);
+                        position(87, 18);
                         printf("                         ");
                         background_color(DARK_YELLOW);
                         text_color(YELLOW);
-                        position(97, 27);
+                        position(87, 20);
                         printf("                         ");
-                        position(98, 28);
+                        position(88, 21);
                         printf("    TRANSFER KE  BANK    ");
-                        position(99, 29);
+                        position(89, 22);
                         printf("                         ");
                         background_color(YELLOW);
                         text_color(DARK_YELLOW);
-                        position(99, 31);
+                        position(89, 24);
                         printf("                         ");
-                        position(98, 32);
+                        position(88, 25);
                         printf("   RIWAYAT PEMBAYARAN    ");
-                        position(97, 33);
+                        position(87, 26);
                         printf("                         ");
                         menupilih = 3;
                     }
@@ -1168,27 +1201,27 @@ void Transaction(char username_field[])
                     {
                         background_color(YELLOW);
                         text_color(DARK_YELLOW);
-                        position(99, 23);
+                        position(89, 16);
                         printf("                         ");
-                        position(98, 24);
+                        position(88, 17);
                         printf("   P E M B A Y A R A N   ");
-                        position(97, 25);
+                        position(87, 18);
                         printf("                         ");
                         background_color(DARK_YELLOW);
                         text_color(YELLOW);
-                        position(97, 27);
+                        position(87, 20);
                         printf("                         ");
-                        position(98, 28);
+                        position(88, 21);
                         printf("    TRANSFER KE  BANK    ");
-                        position(99, 29);
+                        position(89, 22);
                         printf("                         ");
-                        position(99, 31);
+                        position(89, 24);
                         background_color(DARK_YELLOW);
                         text_color(YELLOW);
                         printf("                         ");
-                        position(98, 32);
+                        position(88, 25);
                         printf("   RIWAYAT PEMBAYARAN    ");
-                        position(97, 33);
+                        position(87, 26);
                         printf("                         ");
                         menupilih = 1;
                     }
@@ -1197,85 +1230,85 @@ void Transaction(char username_field[])
                 {
                     if (menupilih == 3)
                     {
-                        position(99, 23);
+                        position(89, 16);
                         background_color(DARK_YELLOW);
                         text_color(YELLOW);
                         printf("                         ");
-                        position(98, 24);
+                        position(88, 17);
                         printf("   P E M B A Y A R A N   ");
-                        position(97, 25);
+                        position(87, 18);
                         printf("                         ");
                         background_color(YELLOW);
                         text_color(DARK_YELLOW);
-                        position(97, 27);
+                        position(87, 20);
                         printf("                         ");
-                        position(98, 28);
+                        position(88, 21);
                         printf("    TRANSFER KE  BANK    ");
-                        position(99, 29);
+                        position(89, 22);
                         printf("                         ");
                         background_color(DARK_YELLOW);
                         text_color(YELLOW);
-                        position(99, 31);
+                        position(89, 24);
                         printf("                         ");
-                        position(98, 32);
+                        position(88, 25);
                         printf("   RIWAYAT PEMBAYARAN    ");
-                        position(97, 33);
+                        position(87, 26);
                         printf("                         ");
                         menupilih = 2;
                     }
                     else if (menupilih == 2)
                     {
-                        position(99, 23);
+                        position(89, 16);
                         background_color(YELLOW);
                         text_color(DARK_YELLOW);
                         printf("                         ");
-                        position(98, 24);
+                        position(88, 17);
                         printf("   P E M B A Y A R A N   ");
-                        position(97, 25);
+                        position(87, 18);
                         printf("                         ");
                         background_color(DARK_YELLOW);
                         text_color(YELLOW);
-                        position(97, 27);
+                        position(87, 20);
                         printf("                         ");
-                        position(98, 28);
+                        position(88, 21);
                         printf("    TRANSFER KE  BANK    ");
-                        position(99, 29);
+                        position(89, 22);
                         printf("                         ");
                         background_color(DARK_YELLOW);
                         text_color(YELLOW);
-                        position(99, 31);
+                        position(89, 24);
                         printf("                         ");
-                        position(98, 32);
+                        position(88, 25);
                         printf("   RIWAYAT PEMBAYARAN    ");
-                        position(97, 33);
+                        position(87, 26);
                         printf("                         ");
                         menupilih = 1;
                     }
                     else
                     {
+                        position(89, 16);
                         background_color(DARK_YELLOW);
                         text_color(YELLOW);
-                        position(99, 23);
                         printf("                         ");
-                        position(98, 24);
+                        position(88, 17);
                         printf("   P E M B A Y A R A N   ");
-                        position(97, 25);
+                        position(87, 18);
                         printf("                         ");
                         background_color(DARK_YELLOW);
                         text_color(YELLOW);
-                        position(97, 27);
+                        position(87, 20);
                         printf("                         ");
-                        position(98, 28);
+                        position(88, 21);
                         printf("    TRANSFER KE  BANK    ");
-                        position(99, 29);
+                        position(89, 22);
                         printf("                         ");
                         background_color(YELLOW);
                         text_color(DARK_YELLOW);
-                        position(99, 31);
+                        position(89, 24);
                         printf("                         ");
-                        position(98, 32);
+                        position(88, 25);
                         printf("   RIWAYAT PEMBAYARAN    ");
-                        position(97, 33);
+                        position(87, 26);
                         printf("                         ");
                         menupilih = 3;
                     }
@@ -1318,10 +1351,10 @@ void Transaction(char username_field[])
 void TransactionHistory(char username_field[])
 {
     cursor(false);
-    bg_content(37, 130);
-    outerFrame(37, 131);
+    outerFrame(28, 118);
+    bg_content(27, 115);
     text_color(YELLOW);
-    position(4, 34);
+    position(4, 26);
     printf("< < Tekan Esc (Escape) Untuk Kembali");
     for (int i = 0; i < 10; i++)
     {
@@ -1337,10 +1370,10 @@ void TransactionHistory(char username_field[])
 void Transfer(char username_field[])
 {
     cursor(false);
-    bg_content(37, 130);
-    outerFrame(37, 131);
+    outerFrame(28, 118);
+    bg_content(27, 115);
     text_color(YELLOW);
-    position(4, 34);
+    position(4, 26);
     printf("< < Tekan Esc (Escape) Untuk Kembali");
     while ((pilih = getch()) != 27)
     {
@@ -1573,21 +1606,19 @@ void DisplayMain()
 {
     int a = 0, b = 0, pinjaman = 2000000, pinjaman1 = 1000000, bulan = 6, bulan1 = 1;
     cursor(false);
-    bg_content(37, 130);
-    outerFrame(37, 131);
+    outerFrame(28, 118);
+    bg_content(27, 115);
     background_color(GRAY);
     text_color(YELLOW);
     Logo(0);
     position(48, 8);
     printf("Ajukan Pinjaman Online Tanpa Jaminan");
-    position(22, 9);
+    position(20, 9);
     printf("Hanya Dengan Nomor NIK dan Nomor Hp, Dapatkan Kredit Hingga Rp. 20.000.000 Tanpa Angunan.");
     position(56, 22);
     printf("Ajukan Pinjaman");
     position(61, 25);
     printf("Masuk");
-    position(110, 3);
-    printf("i. Tentang Aplikasi");
     position(18, 11);
     printf("Jumlah Pinjaman");
     position(22, 12);
@@ -1615,8 +1646,8 @@ void DisplayMain()
     printf("Total Pinjaman = Rp.%10d", pinjaman);
     position(46, 16);
     printf("Lama  Pinjaman = %5d Bulan", bulan);
-    position(10, 36);
-    printf("Gunakan Panah Kiri Geser Slider Ke Kiri, Gunakan Panah Kanan Untuk Geser Slider Ke Kanan, Enter Untuk ConfirmExit");
+    position(6, 20);
+    printf("Gunakan Panah Kiri Geser Slider Ke Kiri, Gunakan Panah Kanan Untuk Geser Slider Ke Kanan, Enter Untuk Lanjut");
     while ((pilih = getch()) != 13)
     {
         cursor(false);
@@ -1704,8 +1735,6 @@ void DisplayMain()
     }
     pilih = 0;
     a = b = 0;
-    position(10, 36);
-    printf("Gunakan Panah Kiri Geser Slider Ke Kiri, Gunakan Panah Kanan Untuk Geser Slider Ke Kanan, Enter Untuk ConfirmExit");
     while ((pilih = getch()) != 13)
     {
         if (pilih == 77 && a <= 52)
@@ -1802,10 +1831,12 @@ void DisplayMain()
     75 - Kiri
      */
     no = 0;
-    position(10, 36);
+    position(90, 3);
+    printf("i. Tentang Aplikasi");
+    position(6, 20);
     printf("                                                                                                             ");
-    position(10, 36);
-    printf("%c Untuk Geser Menu Ke Bawah, %c Untuk Geser Menu Ke Atas, Enter Untuk ConfirmExit Dan Tab 2x Untuk Keluar", 24, 25);
+    position(6, 20);
+    printf("%c Untuk Geser Menu Ke Bawah, %c Untuk Geser Menu Ke Atas, Enter Untuk Menu Selanjutnya Dan Tab 2x Untuk Keluar", 24, 25);
     position(56, 22);
     text_color(DARK_YELLOW);
     printf("Ajukan Pinjaman\n");
@@ -1823,7 +1854,7 @@ void DisplayMain()
                 position(61, 25);
                 text_color(DARK_YELLOW);
                 printf("Masuk\n");
-                position(110, 3);
+                position(90, 3);
                 text_color(YELLOW);
                 printf("i. Tentang Aplikasi");
                 menupilih = 2;
@@ -1849,7 +1880,7 @@ void DisplayMain()
                 position(61, 25);
                 text_color(YELLOW);
                 printf("Masuk\n");
-                position(110, 3);
+                position(90, 3);
                 text_color(YELLOW);
                 printf("i. Tentang Aplikasi");
                 menupilih = 1;
@@ -1875,7 +1906,7 @@ void DisplayMain()
                 position(61, 25);
                 text_color(YELLOW);
                 printf("Masuk\n");
-                position(110, 3);
+                position(90, 3);
                 text_color(YELLOW);
                 printf("i. Tentang Aplikasi");
                 menupilih = 1;
@@ -1888,7 +1919,7 @@ void DisplayMain()
                 position(61, 25);
                 text_color(YELLOW);
                 printf("Masuk\n");
-                position(110, 3);
+                position(90, 3);
                 text_color(DARK_YELLOW);
                 printf("i. Tentang Aplikasi");
                 menupilih = 3;
@@ -1924,9 +1955,9 @@ void DisplayMain()
 void AdminMenu()
 {
     cursor(false);
-    bg_content(37, 130);
-    outerFrame(37, 131);
-    VLine(36, DARK_YELLOW, 31, 0);
+    outerFrame(28, 118);
+    bg_content(27, 115);
+    VLine(26, DARK_YELLOW, 31, 0);
     text_color(YELLOW);
     Logo(7);
     position(12, 3);
@@ -2119,7 +2150,8 @@ void AdminMenu()
     else if (menupilih == 2)
     {
         background_color(GRAY);
-        About();
+        AdminMenu();
+        // About();
     }
     else if (menupilih == 3)
     {
@@ -2154,16 +2186,16 @@ void UserMenu(char name[])
     }
     fclose(fr);
     cursor(false);
-    bg_content(37, 130);
-    outerFrame(37, 131);
-    VLine(37, DARK_YELLOW, 31, 0);
+    outerFrame(28, 118);
+    bg_content(27, 115);
+    VLine(27, DARK_YELLOW, 31, 0);
     text_color(YELLOW);
     Logo(7);
     position(12, 3);
     printf("  U  S  E  R");
-    position(12, 13);
+    position(12, 7);
     printf("%s", name);
-    position(3, 30);
+    position(8, 14);
     printf("Tab 2x Untuk Logout");
     background_color(DARK_YELLOW);
     position(5, 15);
@@ -2375,7 +2407,7 @@ void UserMenu(char name[])
         else
         {
             background_color(GRAY);
-            position(3, 28);
+            position(7, 26);
             text_color(YELLOW);
             printf("Masih Ada Pinjaman");
             Sleep(550);
@@ -2390,98 +2422,120 @@ void UserMenu(char name[])
 void Disclaimer()
 {
     cursor(false);
-    bg_content1(92, 28, GRAY, 1, 8);
+    bg_content(14, 8);
+    bg_content(27, 70);
+    background_color(GRAY);
+    text_color(YELLOW);
+    Logo(3);
+    position(12, 3);
+    printf("  A  B  O  U  T");
     position(3, 7);
     printf("Disclaimer");
     position(3, 8);
-    printf("1. Layanan Pinjam Meminjam Berbasis Teknologi Informasi merupakan kesepakatan perdata antara Pemberi Pinjaman dengan Penerima");
+    printf("1. Layanan Pinjam Meminjam Berbasis Teknologi Informasi merupakan kesepakatan perdata antara Pemberi Pinjaman");
     position(3, 9);
-    printf("   Pinjaman. sehingga segala risiko yang timbul dari kesepakatan tersebut ditanggung sepenuhnya oleh masing-masing pihak.");
+    printf("   dengan Penerima Pinjaman. sehingga segala risiko yang timbul dari kesepakatan tersebut ditanggung sepenuhnya");
     position(3, 10);
-    printf("2. Risiko kredit atau gagal bayar ditanggung sepenuhnya oleh Pemberi Pinjaman. Tidak ada lembaga atau otoritas negara yang");
+    printf("   oleh masing-masing pihak.");
+    position(3, 10);
+    printf("2. Risiko kredit atau gagal bayar ditanggung sepenuhnya oleh Pemberi Pinjaman. Tidak ada lembaga atau otoritas");
     position(3, 11);
-    printf("   bertanggung jawab atas risiko gagal bayar ini.");
+    printf("   negara yang bertanggung jawab atas risiko gagal bayar ini.");
     position(3, 12);
-    printf("3. Pemberi Pinjaman yang belum memiliki pengetahuan dan pengalaman pinjam meminjam, disarankan tidak menggunakan layanan ini.");
+    printf("3. Pemberi Pinjaman yang belum memiliki pengetahuan dan pengalaman pinjam meminjam, disarankan tidak menggunakan");
     position(3, 13);
-    printf("4. Penerima Pinjaman harus mempertimbangkan biaya cicilan pinjaman dan biaya lainnya sesuai dengan kemampuan dalam melunasi");
+    printf("   layanan ini.");
     position(3, 14);
-    printf("   pinjaman.");
-    position(3, 15);
-    printf("6. Setiap kecurangan tercatat secara digital di dunia maya dan dapat diketahui masyarakat luas di media sosial.");
-    position(3, 16);
-    printf("9. Setiap transaksi dan kegiatan pinjam meminjam atau pelaksanaan kesepakatan");
-    position(3, 18);
-    printf("   mengenai pinjam meminjam antara atau yang melibatkan Penyelenggara,");
-    position(3, 19);
-    printf("   Pemberi Pinjaman dan/atau Penerima Pinjaman wajib dilakukan");
-    position(3, 20);
-    printf("   melalui escrow account dan virtual account sebagaimana yang");
-    position(3, 21);
-    printf("   diwajibkan berdasarkan Peraturan Otoritas Jasa Keuangan Republik Indonesia");
-    position(3, 22);
-    printf("   Nomor 10/POJK.05/2022 tentang Layanan Pendanaan");
-    position(3, 23);
-    printf("   Bersama Berbasis Teknologi Informasi dan pelanggaran atau ketidakpatuhan");
-    position(3, 24);
-    printf("   terhadap ketentuan tersebut merupakan bukti telah");
-    position(3, 25);
-    printf("   terjadinya pelanggaran hukum oleh Penyelenggara sehingga Penyelenggara wajib");
-    position(3, 26);
-    printf("   menanggung ganti rugi yang diderita oleh masing-masing Pengguna sebagai akibat");
-    position(3, 27);
-    printf("   langsung dari pelanggaran hukum tersebut di atas tanpa mengurangi hak Pengguna yang");
-    position(3, 28);
-    printf("   menderita kerugian menurut Kitab Undang-Undang Hukum Perdata.");
+    printf("4. Penerima Pinjaman harus mempertimbangkan biaya cicilan pinjaman dan biaya lainnya sesuai dengan kemampuan");
+    position(3, 14);
+    printf("   dalam melunasi pinjaman.");
+    // position(3, 15);
+    // printf("6. Setiap kecurangan tercatat secara digital di dunia maya dan dapat diketahui masyarakat luas di media sosial.");
+    // position(3, 16);
+    // printf("9. Setiap transaksi dan kegiatan pinjam meminjam atau pelaksanaan kesepakatan");
+    // position(3, 18);
+    // printf("   mengenai pinjam meminjam antara atau yang melibatkan Penyelenggara,");
+    // position(3, 19);
+    // printf("   Pemberi Pinjaman dan/atau Penerima Pinjaman wajib dilakukan");
+    // position(3, 20);
+    // printf("   melalui escrow account dan virtual account sebagaimana yang");
+    // position(3, 21);
+    // printf("   diwajibkan berdasarkan Peraturan Otoritas Jasa Keuangan Republik Indonesia");
+    // position(3, 22);
+    // printf("   Nomor 10/POJK.05/2022 tentang Layanan Pendanaan");
+    // position(3, 23);
+    // printf("   Bersama Berbasis Teknologi Informasi dan pelanggaran atau ketidakpatuhan");
+    // position(3, 24);
+    // printf("   terhadap ketentuan tersebut merupakan bukti telah");
+    // position(3, 25);
+    // printf("   terjadinya pelanggaran hukum oleh Penyelenggara sehingga Penyelenggara wajib");
+    // position(3, 26);
+    // printf("   menanggung ganti rugi yang diderita oleh masing-masing Pengguna sebagai akibat");
+    // position(3, 27);
+    // printf("   langsung dari pelanggaran hukum tersebut di atas tanpa mengurangi hak Pengguna yang");
+    // position(3, 28);
+    // printf("   menderita kerugian menurut Kitab Undang-Undang Hukum Perdata.");
     getch();
 }
 void TermOfService()
 {
     cursor(false);
-    bg_content1(126, 15, GRAY, 2, 6);
-    bg_content1(92, 26, GRAY, 1, 8);
-    position(3, 11);
+    bg_content(14, 115);
+    bg_content(27, 80);
+    background_color(GRAY);
+    text_color(YELLOW);
+    Logo(3);
+    position(12, 3);
+    printf("  A  B  O  U  T");
+    // bg_content1(126, 15, GRAY, 2, 6);
+    // bg_content1(92, 26, GRAY, 1, 8);
+    position(3, 7);
     printf("Syarat Dan Ketentuan");
-    position(3, 15);
+    position(3, 8);
     printf("1. Merupakan Warga Negara Indonesia (WNI) dengan KTP yang sah");
-    position(3, 17);
+    position(3, 9);
     printf("2. Berusia 20-65 tahun");
-    position(3, 19);
+    position(3, 10);
     printf("3. Memiliki penghasilan minimal Rp 3.000.000 per bulan");
-    position(3, 21);
+    position(3, 11);
     printf("4. Informasi yang diberikan harus benar, akurat dan lengkap");
-    position(3, 23);
+    position(3, 12);
     printf("5. Membayar cicilan tepat waktu setiap 30 hari pada tanggal 1");
-    position(3, 25);
+    position(3, 13);
     printf("6. Maksimum suku bunga tahunan 56% (APR), sudah termasuk biaya");
-    position(3, 27);
+    position(3, 14);
     printf("   provisi Area Layanan Danapo");
-    position(3, 29);
+    position(3, 15);
     printf("   Danapo berizin dan diawasi oleh Otoritas Jasa Keuangan (OJK)");
 }
 void Contacts()
 {
     cursor(false);
-    bg_content1(126, 15, GRAY, 2, 6);
-    bg_content1(92, 26, GRAY, 1, 8);
+    bg_content(14, 115);
+    bg_content(27, 80);
+    background_color(GRAY);
     text_color(YELLOW);
-    position(3, 11);
+    Logo(3);
+    position(12, 3);
+    printf("  A  B  O  U  T");
+    text_color(YELLOW);
+    position(3, 7);
     printf("K  O  N  T  A  K     K  A  M  I");
-    position(3, 15);
+    position(3, 11);
     printf("D A N A P O PROJECT PUB UAS Pelatihan Logika Dan Algoritma (Bahasa C)");
+    position(3, 13);
+    printf("         ");
     position(3, 17);
-    printf("         ");
-    position(3, 19);
     printf("NAMA: SALIM HIDAYAT");
-    position(3, 21);
+    position(3, 19);
     printf("         ");
-    position(3, 23);
+    position(3, 21);
     printf("KELOMPOK 7 URANUS");
-    position(3, 25);
+    position(3, 23);
     printf("");
-    position(3, 27);
+    position(3, 25);
     printf("A'21 GETCH (GENERATION OF TECHNOLOGY)");
-    position(3, 29);
+    position(3, 27);
     printf("");
 }
 void ConfirmExit(int exit1)
@@ -2513,7 +2567,7 @@ void ConfirmExit(int exit1)
         }
         if (menupilih == 1)
         {
-            Sleep(550);
+            Sleep(250);
             exit(0);
         }
         else if (menupilih == 0)
@@ -2561,6 +2615,6 @@ void ConfirmExit(int exit1)
 }
 void main()
 {
-    win_control();
+    // win_control();
     FileCheck();
 }
