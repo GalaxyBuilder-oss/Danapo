@@ -60,12 +60,15 @@ Gunakan **GCC** untuk mengompilasi file `main.c`:
 
 ```sh
 gcc main.c -o main
+```
 
 2️⃣ Jalankan Program
 
 Eksekusi program yang telah dikompilasi:
+```sh
 
 ./main
+```
 
 3️⃣ Menggunakan Program
 
