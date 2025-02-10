@@ -14,6 +14,7 @@ Proyek ini merupakan simulasi sistem manajemen pinjaman sederhana.
 ## 📂 Struktur Proyek
 
 Danapo/
+```shell
 ├── flowchart/
 │   └── [file-flowchart]
 ├── test/
@@ -29,7 +30,7 @@ Danapo/
 ├── main.exe
 ├── munkgin.txt
 └── validation.c
-
+```
 flowchart/: Berisi diagram alur untuk proyek.
 
 test/: Berisi file terkait pengujian.
