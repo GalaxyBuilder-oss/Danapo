@@ -13,7 +13,44 @@ Proyek ini merupakan simulasi sistem manajemen pinjaman sederhana.
 
 ## 📂 Struktur Proyek
 
-Danapo/ ├── flowchart/          # Berisi diagram alur untuk proyek ├── test/               # Berisi file pengujian ├── README.md           # Dokumentasi proyek ├── SECURITY.md         # Informasi keamanan proyek ├── coba.c              # File kode sumber untuk percobaan ├── coba.exe            # File eksekusi dari coba.c ├── data.txt            # File data yang digunakan dalam proyek ├── libs_s.c            # Library tambahan untuk proyek ├── list_debitur.txt    # Data daftar debitur ├── main.c              # File kode sumber utama aplikasi ├── main.exe            # File eksekusi dari main.c ├── munkgin.txt         # File data tambahan └── validation.c        # File kode sumber untuk fungsi validasi
+Danapo/
+├── flowchart/
+│   └── [file-flowchart]
+├── test/
+│   └── [file-test]
+├── README.md
+├── SECURITY.md
+├── coba.c
+├── coba.exe
+├── data.txt
+├── libs_s.c
+├── list_debitur.txt
+├── main.c
+├── main.exe
+├── munkgin.txt
+└── validation.c
+
+flowchart/: Berisi diagram alur untuk proyek.
+
+test/: Berisi file terkait pengujian.
+
+coba.c: File kode sumber untuk percobaan.
+
+coba.exe: File eksekusi untuk coba.c.
+
+data.txt: File data yang digunakan dalam proyek.
+
+libs_s.c: File kode sumber untuk library tambahan.
+
+list_debitur.txt: Daftar debitur yang disimpan.
+
+main.c: File kode sumber utama untuk aplikasi.
+
+main.exe: File eksekusi untuk main.c.
+
+munkgin.txt: File data tambahan.
+
+validation.c: File kode sumber untuk fungsi validasi.
 
 ## 🛠️ Cara Menggunakan
 
