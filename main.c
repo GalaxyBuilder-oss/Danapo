@@ -68,6 +68,7 @@ void Contacts();
 void Transfer(char username_field[]);
 void TransactionHistory(char username_fields[]);
 
+// Check file before the application start
 void FileCheck()
 {
     background_color(BLACK);
@@ -94,7 +95,7 @@ void FileCheck()
             fw = fopen("./data.txt", "w");
             fw1 = fopen("./list_debitur.txt", "w");
             // Langsung Diisi Pengguna Pertama Sebagai Contoh
-            fputs("321234567891111;Salim Hidayat;2* Februari 2002;Ciamis, Jawa barat;081224717930;Hidayatsalim004@gmail.com;salimwae;111111\n", fw);
+            fputs("321234567891111;Salim Hidayat;2* Februari 2002;Ciamis, Jawa barat;081224717930;Hidayatsalim004@outlook.com;salimwae;111111\n", fw);
             fputs("321234567891111;20000000;20;12;salimwae;111111\n", fw1);
             position(52, 13);
             printf("File Tidak Ada, Sedang Membuat File Baru...");
@@ -110,6 +111,8 @@ void FileCheck()
     } while (check_file);
     DisplayMain();
 }
+
+// Login Validation
 void Login_Val(char username_field[], char password_field[])
 {
     int read = 0;
@@ -252,6 +255,8 @@ void Login_Val(char username_field[], char password_field[])
         }
     }
 }
+
+// Login Display
 void Login()
 {
     cursor(true);
@@ -285,6 +290,8 @@ void Login()
     text_color(YELLOW);
     Login_Val(userLogin.username, userLogin.password);
 }
+
+// Signup display
 void SignUp(int loan, int month)
 {
     cursor(false);
@@ -297,56 +304,73 @@ void SignUp(int loan, int month)
     printf(" S I G N U P");
     UserData(loan, month);
 }
+
+// Supaya Memunculkan Batas Dari Sebuah Inputan
+void inputField(char pos[], int x, int y, char msg[])
+{
+    int gap = 18;
+    if (strcmp(strlwr(pos), "first") == 0)
+    {
+        position(x + gap, y);
+    }
+    else if (strcmp(strlwr(pos), "second") == 0)
+    {
+        position(x + gap, y - 2);
+        printf("                          ");
+        position(x + gap, y);
+    }
+    printf("%c %s", 219,msg);
+}
+
+// Form for input User Loan Data when signup
 void UserData(int loan, int month)
 {
     int read = 0;
     cursor(true);
     position(5, 9);
     printf("NIK           : ");
-    nik_valid(user.nik, 21, 9);
     position(5, 11);
     printf("Nama Lengkap  : ");
-    name_valid(user.name, 21, 11);
     position(5, 13);
     printf("Tanggal Lahir : 00 / 00 / 0000");
+    position(5, 15);
+    printf("Alamat        : ");
+    position(5, 17);
+    printf("No. HP        : ");
+    position(5, 19);
+    printf("E-Mail        : ");
+    position(5, 21);
+    printf("Username      : ");
+    position(5, 23);
+    printf("Masukkan PIN  : ");
+    inputField("first", 38, 9, "Minimal panjang 13");
+    nik_valid(user.nik, 21, 9);
+    inputField("second", 38, 11, "Minimal panjang 2");
+    name_valid(user.name, 21, 11);
     position(21, 13);
     printf("  ");
-    position(38, 13);
-    printf("                          ");
-    position(38, 13);
-    printf("Tanggal Min 01 Maks 31");
+    inputField("second",38,13,"Min 01 Maks 31");
     date_valid(user.dateofbirth, 21, 13);
     position(26, 13);
     printf("  ");
-    position(38, 13);
-    printf("                          ");
-    position(38, 13);
-    printf("Bulan Min 01 Maks 12");
+    inputField("second",38,13,"Min 01 Maks 12");
     month_valid(user.dateofbirth, 26, 13);
     position(31, 13);
     printf("    ");
-    position(38, 13);
-    printf("                          ");
-    position(38, 13);
-    printf("Tahun Min 1999 Maks 2100");
+    inputField("second",38,13,"Min 1999 Maks 2100");
     year_valid(user.dateofbirth, 31, 13);
-    position(38, 13);
-    printf("                          ");
-    position(5, 15);
-    printf("Alamat        : ");
+    inputField("second",38,15,"Min ?");
     address_valid(user.address, 21, 15);
-    position(5, 17);
-    printf("No. HP        : ");
+    inputField("second",38,17,"Min 10");
     phoneno_valid(user.phonenum, 21, 17);
-    position(5, 19);
-    printf("E-Mail        : ");
+    inputField("second",38,19,"Maks 50");
     email_valid(user.email, 21, 19);
-    position(5, 21);
-    printf("Username      : ");
+    inputField("second",38,21,"Min Dan Maks 6");
     username_valid(user.username, 21, 21);
-    position(5, 23);
-    printf("Masukkan PIN  : ");
+    inputField("second", 38,23,"Min Dan Maks 6");
     password_valid(user.password, 21, 23);
+    inputField("second",38,25,"");
+
     fr = fopen("./data.txt", "r");
     while (!feof(fr))
     {
@@ -382,9 +406,11 @@ void UserData(int loan, int month)
         position(5, 25);
         printf("NIK Telah Terdaftar, Ulangi Pendaftaran");
         Sleep(750);
-        DisplayMain();
+        SignUp(loan, month);
     }
 }
+
+// Payment Menu
 void Payment(char username_field[])
 {
     int uang = 0;
@@ -519,6 +545,8 @@ void Payment(char username_field[])
     Sleep(1250);
     Transaction(username_field);
 }
+
+// About display
 void About()
 {
     cursor(false);
@@ -757,6 +785,8 @@ void About()
     }
     DisplayMain();
 }
+
+// AccountList Display
 void AccountList()
 {
     cursor(true);
@@ -921,6 +951,8 @@ void AccountList()
     else
         AccountList();
 }
+
+// Edit Account display
 void edit_account(char username_field[])
 {
     cursor(true);
@@ -958,6 +990,8 @@ void edit_account(char username_field[])
     }
     AccountList();
 }
+
+// Delete Account Function
 void DeleteAccount(char username_field[])
 {
     for (int i = 0; i < 10; i++)
@@ -997,6 +1031,8 @@ void DeleteAccount(char username_field[])
     fclose(fw);
     AdminMenu();
 }
+
+// Profile display
 void Profile(char username_field[])
 {
     cursor(false);
@@ -1033,6 +1069,8 @@ void Profile(char username_field[])
     }
     UserMenu(user1.username);
 }
+
+// Transaction display
 void Transaction(char username_field[])
 {
     if (strcmp(username_field, admin_us) == 0)
@@ -1348,6 +1386,8 @@ void Transaction(char username_field[])
         }
     }
 }
+
+// Transaction History Display
 void TransactionHistory(char username_field[])
 {
     cursor(false);
@@ -1367,6 +1407,8 @@ void TransactionHistory(char username_field[])
     }
     Transaction(username_field);
 }
+
+// Transfer Display
 void Transfer(char username_field[])
 {
     cursor(false);
@@ -1381,6 +1423,8 @@ void Transfer(char username_field[])
     }
     Transaction(username_field);
 }
+
+// ApplyForLoan Display
 void ApplyForLoan(char as[])
 {
     int a = 0, b = 0, pinjaman = 2000000, pinjaman1 = 1000000, bulan = 6, bulan1 = 1;
@@ -1602,6 +1646,8 @@ void ApplyForLoan(char as[])
     fclose(fa);
     UserMenu(user1.username);
 }
+
+// Main Display
 void DisplayMain()
 {
     int a = 0, b = 0, pinjaman = 2000000, pinjaman1 = 1000000, bulan = 6, bulan1 = 1;
@@ -1952,6 +1998,8 @@ void DisplayMain()
         About();
     }
 }
+
+// Admin Menu Display
 void AdminMenu()
 {
     cursor(false);
@@ -2163,6 +2211,8 @@ void AdminMenu()
         ConfirmExit(1);
     }
 }
+
+// User Menu Display
 void UserMenu(char name[])
 {
     int i = 0;
@@ -2419,6 +2469,8 @@ void UserMenu(char name[])
         ConfirmExit(1);
     }
 }
+
+// Disclaimer Display
 void Disclaimer()
 {
     cursor(false);
@@ -2477,6 +2529,8 @@ void Disclaimer()
     // printf("   menderita kerugian menurut Kitab Undang-Undang Hukum Perdata.");
     getch();
 }
+
+// Term Of Service Display
 void TermOfService()
 {
     cursor(false);
@@ -2508,6 +2562,8 @@ void TermOfService()
     position(3, 15);
     printf("   Danapo berizin dan diawasi oleh Otoritas Jasa Keuangan (OJK)");
 }
+
+// Contact Display
 void Contacts()
 {
     cursor(false);
@@ -2538,6 +2594,8 @@ void Contacts()
     position(3, 27);
     printf("");
 }
+
+// Confirm Exit Dialog
 void ConfirmExit(int exit1)
 {
     cursor(false);
@@ -2613,6 +2671,8 @@ void ConfirmExit(int exit1)
         }
     }
 }
+
+// primary function of this application
 void main()
 {
     // win_control();

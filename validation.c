@@ -6,7 +6,7 @@ char *nik_valid(char *nik, int x, int y)
     char input;
     static char nik1[20] = {};
     position(x, y);
-    while ((input = getch()) != 13 || i == 0)
+    while ((input = getch()) != 13 || i == 0 || i < 14)
     {
         if ((i == 0 && input == 51) || (i == 1 && (nik1[i-1] == 51 && input == 50)) || (i == 2 && (nik1[i-1] == 50 && input == 48)) || (i == 3 && (nik1[i-1] == 48 && input == 55)) || (i == 4 && (nik1[i-1] == 55 && input == 49)) || (i == 5 && (nik1[i-1] == 49 && input == 49)) || (i == 6 && (nik1[i-1] == 49 && (input >= 48 && input <= 51))) || (i == 7 && (nik1[i-1] == 51 && (input == 48 || input == 49))) || (i == 7 && ((nik1[i-1] == 48 || nik1[i-1] == 49 || nik1[i-1] == 50) && (input >= 48 && input <= 57))) || (i == 8 && (input >= 48 && input <= 50)) || (i == 9 && ((nik1[i-1] == 48 && input >= 48 && input <= 57) || (nik1[i-1] == 49 && input >= 48 && input <= 50))) || ((i == 10 || i == 11) && (input >= 48 && input <= 57)) || ((i >= 12 && i <= 14) && input == 48) || (i == 15 && (input >= 48 && input <= 57)))
         {
@@ -15,7 +15,7 @@ char *nik_valid(char *nik, int x, int y)
             nik1[i] = input;
             i++;
         }
-        else if (input == 8 && i != 0)
+        else if (input == 8 && i > 0)
         {
             i--;
             position(x + i, y);
@@ -34,16 +34,16 @@ char *name_valid(char *name, int x, int y)
     char input;
     static char name1[50] = {};
     position(x, y);
-    while ((input = getch()) != 13 || i == 0)
+    while ((input = getch()) != 13 || i == 0 || i < 2)
     {
-        if (((i == 0 || name1[i-1] == 32) && (input >= 65 && input <= 90))|| (i > 1 && (name1[i-1] != 32) && input >= 97 && input <= 122) || (i == 1 && input != 32) || (i > 1 && (name1[i-1] != 32 && input == 32)) || (i == 1 && !(input >= 48 && input <= 57)))
+        if (((i == 0 || name1[i-1] == 32) && (input >= 65 && input <= 90)) || (i > 1 && (name1[i-1] != 32) && input >= 97 && input <= 122) || (i == 1 && input != 32) || (i > 1 && (name1[i-1] != 32 && input == 32)) || (i == 1 && !(input >= 48 && input <= 57)))
         {
             position(x + i, y);
             printf("%c", input);
             name1[i] = input;
             i++;
         }
-        else if (input == 8 && i != 0)
+        else if (input == 8 && i > 0)
         {
             i--;
             position(x + i, y);
@@ -71,7 +71,7 @@ char *date_valid(char *date, int x, int y)
             date1[i] = input;
             i++;
         }
-        else if (input == 8 && i != 0)
+        else if (input == 8 && i > 0)
         {
             i--;
             position(x + i, y);
@@ -100,7 +100,7 @@ char *month_valid(char *month, int x, int y)
             month1[i] = input;
             i++;
         }
-        else if (input == 8 && i != 0)
+        else if (input == 8 && i > 0)
         {
             i--;
             position(x + i, y);
@@ -129,7 +129,7 @@ char *year_valid(char *year, int x, int y)
             year1[i] = input;
             i++;
         }
-        else if (input == 8 && i != 0)
+        else if (input == 8 && i > 0)
         {
             i--;
             position(x + i, y);
@@ -165,7 +165,7 @@ char *username_valid(char *user1, int x, int y)
             username[i] = input;
             i++;
         }
-        else if (input == 8 && i != 0)
+        else if (input == 8 && i > 0)
         {
             i--;
             position(x + i, y);
@@ -196,7 +196,7 @@ char *password_valid(char password[], int x, int y)
             password1[i] = input;
             i++;
         }
-        else if (input == 8 && i != 0)
+        else if (input == 8 && i > 0)
         {
             i--;
             position(x + i, y);
@@ -224,7 +224,7 @@ char *address_valid(char address[], int x, int y)
             address1[i] = input;
             i++;
         }
-        else if (input == 8 && i != 0)
+        else if (input == 8 && i > 0)
         {
             i--;
             position(x + i, y);
@@ -245,7 +245,7 @@ char *email_valid(char *email, int x, int y)
     position(x, y);
     while ((input = getch()) != 13 || i == 0)
     {
-        if (i < 25 && (input >= 65 && input <= 90))
+        if (i < 25 && (input >= 97 && input <= 122))
         {
             position(x + i, y);
             printf("%c", input);
@@ -259,7 +259,7 @@ char *email_valid(char *email, int x, int y)
             email1[i] = input;
             i++;
         }
-        else if (input == 8 && i != 0)
+        else if (input == 8 && i > 0)
         {
             i--;
             position(x + i, y);
@@ -286,7 +286,7 @@ char *phoneno_valid(char phoneno[], int x, int y)
             phoneno1[i] = input;
             i++;
         }
-        else if (input == 8 && i != 0)
+        else if (input == 8 && i > 0)
         {
             i--;
             position(x + i, y);

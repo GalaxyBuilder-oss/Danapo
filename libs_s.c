@@ -27,16 +27,21 @@
 int txt_color = FOREGROUND_INTENSITY;
 int bg_color = 0;
 
+// To set position of cursor or text
 void position(int x, int y)
 {
     COORD pos = {x, y};
     SetConsoleCursorPosition(HandleO, pos);
 }
+
+// To set text color
 void text_color(short color)
 {
     SetConsoleTextAttribute(HandleO, color | (bg_color << 4));
     txt_color = color;
 }
+
+// To set terminal background color
 void background_color(short color)
 {
     SetConsoleTextAttribute(HandleO, txt_color | (color << 4));
@@ -45,6 +50,8 @@ void background_color(short color)
 /*
     End        Source : Conui.h(PUB Code)
 */
+
+// To Make Vertical Lane
 void VLine(short y, char color, int xx, int yy)
 {
     text_color(color);
@@ -57,6 +64,7 @@ void VLine(short y, char color, int xx, int yy)
         }
     }
 }
+// To make horizontal Line
 void HLine(short x, char color, int xx, int yy)
 {
     text_color(color);
@@ -69,6 +77,7 @@ void HLine(short x, char color, int xx, int yy)
         }
     }
 }
+// To implement background for a content or pop up
 void bg_content(int x, int y) {
     background_color(GRAY);
     for(int a = 1; a <= x; a++)
@@ -92,6 +101,7 @@ void bg_content1(int x, int y, char color, int xx, int yy) {
     }
 
 }
+// To make a frame
 void Frame(int x, int y, char color, int xx, int yy)
 {
     text_color(color);
@@ -110,6 +120,7 @@ void Frame(int x, int y, char color, int xx, int yy)
         }
     }
 }
+// To make outer frame
 void outerFrame(int x, int y)
 {
     text_color(DARK_YELLOW);
@@ -123,6 +134,7 @@ void outerFrame(int x, int y)
         }
     }
 }
+// Set Logo In Danapo App
 void Logo(int logo) {
     if (logo == 0) {
         // Danapo Logo
@@ -209,8 +221,8 @@ void Logo(int logo) {
         printf("           ___/                          ");
     }
 }
+// Set The Cursor Visible or Invisible
 void cursor(bool truefalse){
-    // Set The Cursor Invisible
     CONSOLE_CURSOR_INFO info;
     info.dwSize = 100;
     info.bVisible = truefalse;
