@@ -12,7 +12,7 @@ endif
 
 all: $(TARGET)
 
-$(TARGET): main.c libs_s.c validation.c
+$(TARGET): main.c libs_s.c validation.c compatibility.h
 	$(CC) $(CFLAGS) main.c -o $(TARGET)
 
 clean:

@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <conio.h>
+#include "compatibility.h"
 #include "libs_s.c"
 #include "validation.c"
 
@@ -78,8 +78,8 @@ void FileCheck()
     fr1 = fopen("./list_debitur.txt", "r");
     do
     {
-        fclose(fr);
-        fclose(fr1);
+        if (fr) fclose(fr);
+        if (fr1) fclose(fr1);
         outerFrame(28, 118);
         bg_content(27, 115);
         position(52, 13);
@@ -2673,8 +2673,9 @@ void ConfirmExit(int exit1)
 }
 
 // primary function of this application
-void main()
+int main()
 {
     // win_control();
     FileCheck();
+    return 0;
 }

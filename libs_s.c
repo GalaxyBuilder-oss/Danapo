@@ -1,4 +1,6 @@
-#include <windows.h>
+#ifdef _WIN32
+#include "compatibility.h"
+#endif
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -8,6 +10,7 @@
 */
 #define HandleO GetStdHandle(STD_OUTPUT_HANDLE)
 
+#ifdef _WIN32
 #define BLACK 0x0
 #define DARK_BLUE 0x1
 #define DARK_GREEN 0x2
@@ -26,7 +29,9 @@
 #define WHITE 0xf
 int txt_color = FOREGROUND_INTENSITY;
 int bg_color = 0;
+#endif
 
+#ifdef _WIN32
 // To set position of cursor or text
 void position(int x, int y)
 {
@@ -47,6 +52,7 @@ void background_color(short color)
     SetConsoleTextAttribute(HandleO, txt_color | (color << 4));
     bg_color = color;
 }
+#endif
 /*
     End        Source : Conui.h(PUB Code)
 */
@@ -221,6 +227,7 @@ void Logo(int logo) {
         printf("           ___/                          ");
     }
 }
+#ifdef _WIN32
 // Set The Cursor Visible or Invisible
 void cursor(bool truefalse){
     CONSOLE_CURSOR_INFO info;
@@ -255,6 +262,7 @@ void win_control()
     PosY = 0;
     SetWindowPos(ConsoleWindow, NULL, PosX, PosY, w, h, SWP_SHOWWINDOW || SWP_NOSIZE);
 }
+#endif
 
 /* https://www.techiedelight.com/implement-itoa-function-in-c/ */
 
