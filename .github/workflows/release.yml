@@ -1,0 +1,50 @@
+name: Release
+
+on:
+  push:
+    tags: [ 'v*' ]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            platform: linux
+            ext: ''
+          - os: windows-latest
+            platform: windows
+            ext: '.exe'
+          - os: macos-latest
+            platform: macos
+            ext: ''
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup MSYS2 (Windows)
+        if: runner.os == 'Windows'
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          update: true
+          install: mingw-w64-x86_64-gcc make
+      - name: Build (Linux/macOS)
+        if: runner.os != 'Windows'
+        run: make
+      - name: Build (Windows)
+        if: runner.os == 'Windows'
+        shell: msys2 {0}
+        run: make
+      - name: Rename binary
+        shell: bash
+        run: |
+          TAG="${GITHUB_REF_NAME}"
+          if [ "${{ runner.os }}" = "Windows" ]; then
+            mv danapo.exe "Danapo_${TAG}_${{ matrix.platform }}.exe"
+          else
+            mv danapo "Danapo_${TAG}_${{ matrix.platform }}"
+          fi
+      - name: Upload asset
+        uses: softprops/action-gh-release@v2
+        with:
+          files: Danapo_${{ github.ref_name }}_${{ matrix.platform }}${{ matrix.ext }}
