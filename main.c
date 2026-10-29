@@ -100,7 +100,7 @@ void FileCheck()
             position(52, 13);
             printf("File Tidak Ada, Sedang Membuat File Baru...");
             Sleep(350);
-            check_file = true;
+            check_file = false;
             fclose(fw1);
             fclose(fw);
         }
